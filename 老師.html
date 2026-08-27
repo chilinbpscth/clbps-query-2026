@@ -7,9 +7,29 @@
   <title>老師每日查閱</title>
   <link rel="stylesheet" href="heng.css" />
   <style>
-    .who-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    .who-bar label { display: flex; align-items: center; gap: 8px; }
-    .who-bar select { font-size: 16px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); max-width: 100%; }
+    header { position: sticky; top: 0; z-index: 40; padding: 12px 16px 14px; box-shadow: 0 8px 20px rgba(15,76,92,.18); }
+    header h1 { margin: 0; font-size: 20px; letter-spacing: .04em; }
+    .hdr-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .links { margin-top: 0; }
+    .hdr-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+    .hdr-who { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 14px; flex: 1 1 220px; }
+    .hdr-who select {
+      flex: 1; min-width: 0; font-size: 16px; padding: 8px 10px;
+      border-radius: 10px; border: 0; background: #fff; color: var(--ink); max-width: 100%;
+    }
+    header .tabs { display: flex; gap: 6px; margin: 0; }
+    header .tabs button {
+      background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.28);
+    }
+    header .tabs button.on { background: #fff; color: var(--teal); border-color: #fff; }
+    header #dateNav {
+      background: rgba(255,255,255,.12); border: 0; margin: 0; flex: 1 1 100%;
+    }
+    header #dateNav button {
+      background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.28);
+    }
+    header #dateNav button.primary { background: #fff; color: var(--teal); border-color: #fff; }
+    header #dateNav input[type=date] { background: #fff; }
     .campus { font-size: 14px; color: var(--muted); margin: 4px 0 0; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
     .chip { background: #fde7d8; color: var(--coral); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
@@ -62,11 +82,10 @@
       header h1 { font-size: 22px; }
       header p { display: none; }
       main { padding: 12px 12px 40px; }
-      .who-bar { flex-direction: column; align-items: stretch; }
-      .who-bar label { width: 100%; }
-      .who-bar select { flex: 1; width: 100%; }
-      .who-bar .tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; width: 100%; margin: 0; }
-      .who-bar .tabs button { min-height: 40px; }
+      .hdr-who { flex: 1 1 100%; }
+      .hdr-who select { width: 100%; }
+      header .tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; width: 100%; }
+      header .tabs button { min-height: 40px; }
       #dateNav {
         display: grid;
         grid-template-columns: 44px 1fr 44px;
@@ -87,30 +106,31 @@
 </head>
 <body>
   <header>
-    <div class="who">選擇老師，按日期檢視課堂與當值</div>
-    <h1 id="hdrName">老師每日</h1>
-    <div class="links">
-      <a href="查詢.html">查詢工具</a>
-      <a href="index.html">全校資料</a>
+    <div class="hdr-row">
+      <h1>老師每日</h1>
+      <div class="links">
+        <a href="查詢.html">查詢工具</a>
+        <a href="index.html">全校資料</a>
+      </div>
     </div>
-  </header>
-  <main>
-    <div class="nav who-bar">
-      <label>老師
+    <div class="hdr-controls">
+      <label class="hdr-who">老師
         <select id="who"></select>
       </label>
-      <span class="tabs" style="margin:0">
+      <span class="tabs">
         <button type="button" data-view="today" class="on">當日</button>
         <button type="button" data-view="week">本週</button>
         <button type="button" data-view="cycle">循環日</button>
       </span>
+      <div class="nav" id="dateNav">
+        <button type="button" id="prev">〈</button>
+        <input type="date" id="picker" min="2026-08-01" max="2027-08-31" />
+        <button type="button" id="next">〉</button>
+        <button type="button" class="primary" id="todayBtn">今天</button>
+      </div>
     </div>
-    <div class="nav" id="dateNav">
-      <button type="button" id="prev">〈</button>
-      <input type="date" id="picker" min="2026-08-01" max="2027-08-31" />
-      <button type="button" id="next">〉</button>
-      <button type="button" class="primary" id="todayBtn">今天</button>
-    </div>
+  </header>
+  <main>
     <section class="hero" id="hero"></section>
     <div id="board"></div>
   </main>
@@ -429,7 +449,6 @@
 
     function render() {
       const t = teacher();
-      document.getElementById("hdrName").textContent = t.name + "（" + t.code + "）";
       document.title = t.name + " · 每日查閱";
       if (view === "today") renderToday();
       else if (view === "week") renderWeek();
