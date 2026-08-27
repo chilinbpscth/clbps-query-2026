@@ -100,7 +100,7 @@ def fetch_csv_items(gid: str) -> list[dict[str, str]]:
 def dedupe(items: list[dict[str, str]]) -> list[dict[str, str]]:
     merged: dict[tuple[str, str], dict[str, str]] = {}
     for it in items:
-        merged[(it["date"], it["time"], it["title"])] = it
+        merged[(it["date"], it["title"])] = it
     out = list(merged.values())
     out.sort(key=lambda x: (x["date"], x["time"], x["title"]))
     return out

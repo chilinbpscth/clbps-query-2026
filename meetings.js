@@ -44,14 +44,10 @@ const MEETINGS = {
   {"date": "2026-08-28", "time": "15:30", "title": "校隊及拔尖班會議", "who": "*偉、校隊及拔尖班負責老師", "place": "G02"},
   {"date": "2026-08-28", "time": "上午", "title": "小一適應課程", "who": "另見備忘", "place": ""},
   {"date": "2026-08-29", "time": "上午", "title": "幼稚園活動", "who": "待定", "place": ""},
-  {"date": "2026-09-01", "time": "14:30", "title": "小會", "who": "全體老師", "place": "113B"},
   {"date": "2026-09-01", "time": "14:30–16:30", "title": "小會", "who": "全體老師", "place": "113B"},
   {"date": "2026-09-01", "time": "16:30–17:00", "title": "周五下午安排", "who": "*佩、全體老師", "place": "113B"},
   {"date": "2026-09-01", "time": "17:00–17:30", "title": "周會/戶外學習 老師會議", "who": "*蔚、星期四下午任教老師", "place": "113B"},
   {"date": "2026-09-01", "time": "17:30–18:00", "title": "教育博覽會議", "who": "*穎、(其餘出席者待定)", "place": "113B"},
-  {"date": "2026-09-01", "time": "周五下午安排後", "title": "周會/戶外學習 老師會議", "who": "*蔚、星期四下午任教老師", "place": "113B"},
-  {"date": "2026-09-01", "time": "周會/戶外學習 老師會議後", "title": "教育博覽會議", "who": "*穎", "place": "113B"},
-  {"date": "2026-09-01", "time": "小會後", "title": "周五下午安排", "who": "*佩、全體老師", "place": "113B"},
   {"date": "2026-09-02", "time": "14:30–16:00", "title": "AI工作坊", "who": "全體老師", "place": "G02"},
   {"date": "2026-09-03", "time": "14:30–16:00", "title": "AI工作坊", "who": "全體老師", "place": "G02"},
   {"date": "2026-09-03", "time": "15:00–15:30", "title": "全校園健康計劃 會議", "who": "*呂、校長、幗、蔚", "place": "102"},
@@ -122,7 +118,7 @@ function parseGvizTable(table) {
 }
 function dedupeMeetings(list) {
   const map = new Map();
-  for (const m of list) map.set(m.date + "\t" + (m.time || "") + "\t" + m.title, m);
+  for (const m of list) map.set(m.date + "\t" + m.title, m);
   return Array.from(map.values()).sort((a, b) =>
     a.date.localeCompare(b.date) || (a.time || "").localeCompare(b.time || "") || a.title.localeCompare(b.title)
   );
