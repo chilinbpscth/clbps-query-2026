@@ -114,7 +114,7 @@
     <section class="hero" id="hero"></section>
     <div id="board"></div>
   </main>
-  <footer>時間表：老師總表 28/8 版　·　校曆：21-8-26 版　·　會議資料可稍後由試算表匯入</footer>
+  <footer>時間表：老師總表 28/8 版　·　校曆：21-8-26 版　·　會議：每月會議日期試算表</footer>
   <script src="calendar.js"></script>
   <script src="teachers.js"></script>
   <script src="meetings.js"></script>
@@ -215,9 +215,14 @@
     }
     function meetingsFor(isoStr, rec) {
       const week = rec && rec.week;
-      return (MEETINGS.items || []).filter(m =>
-        (m.date && m.date === isoStr) || (!m.date && m.week && week && Number(m.week) === Number(week))
-      );
+      const t = teacher();
+      return (MEETINGS.items || []).filter(m => {
+        const onDay = (m.date && m.date === isoStr) || (!m.date && m.week && week && Number(m.week) === Number(week));
+        return onDay && meetingAppliesTo(m, t);
+      });
+    }
+    function meetingLabel(m) {
+      return m.title + (m.place ? " · " + m.place : "");
     }
     function calEvents(rec, isoStr) {
       if (!rec) return [];
@@ -276,7 +281,7 @@
       if (pm.after) slots.push({ time: "15:20 後", label: "課後", text: pm.after + " · 簽走 17:05", mine: true });
       else slots.push({ time: "15:20 後", label: "課後", text: "簽走 16:30", mine: false, free: true });
       const extra = meetingsFor(isoStr, rec).filter(m => m.time);
-      extra.forEach(m => slots.push({ time: m.time, label: "會議", text: m.title + (m.who ? "（" + m.who + "）" : ""), mine: true, kind: "meet" }));
+      extra.forEach(m => slots.push({ time: m.time, label: "會議", text: meetingLabel(m), mine: true, kind: "meet" }));
       return { rec, wd, hol, slots, campus };
     }
 
@@ -296,7 +301,7 @@
         <div class="muted">${rec && rec.week ? "第 " + rec.week + " 週" : ""} ${rec && rec.theme ? " · " + rec.theme : ""}</div>
         <div class="chips">
           ${ev.map(e => `<span class="chip">${e}</span>`).join("")}
-          ${meets.map(m => `<span class="chip meet">${m.time ? m.time + " " : ""}${m.title}</span>`).join("")}
+          ${meets.map(m => `<span class="chip meet">${m.time ? m.time + " " : ""}${meetingLabel(m)}</span>`).join("")}
         </div>
         ${campus ? `<div class="campus">課前／早會：${campus}</div>` : ""}
       `;
@@ -340,7 +345,7 @@
         const meets = meetingsFor(iso, rec);
         html += `<th>星期${"一二三四五"[wd-1]} ${date.getMonth()+1}/${date.getDate()}
           <span class="sub">${day}</span>
-          ${ev.concat(meets.map(m => m.title)).map(e => `<span class="week-ev">${e}</span>`).join("")}
+          ${ev.concat(meets.map(m => meetingLabel(m))).map(e => `<span class="week-ev">${e}</span>`).join("")}
         </th>`;
       });
       html += `</tr>`;
@@ -465,6 +470,7 @@
     document.getElementById("todayBtn").onclick = () => { dateStr = clamp(iso(new Date())); picker.value = dateStr; render(); };
     picker.onchange = () => { dateStr = clamp(picker.value); render(); };
     render();
+    if (typeof loadMeetingsLive === "function") loadMeetingsLive(render);
   </script>
 </body>
 </html>
