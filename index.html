@@ -27,21 +27,29 @@
       color: var(--ink);
       line-height: 1.55;
     }
-    header.app {
-      position: sticky; top: 0; z-index: 20;
+    .appbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
       background: var(--teal);
-      color: #fff;
-      padding: 16px 20px 14px;
-      box-shadow: 0 8px 24px rgba(15, 76, 92, .22);
+      padding: 8px;
     }
-    header.app h1 {
-      margin: 0 0 4px;
-      font-size: 20px;
+    .appbar a {
+      flex: 1 1 0;
+      min-width: 4.5em;
+      text-align: center;
+      text-decoration: none;
+      color: rgba(255,255,255,.88);
+      padding: 10px 6px;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .appbar a.on {
+      background: #fff;
+      color: var(--teal);
       font-weight: 700;
-      letter-spacing: .04em;
     }
-    header.app p { margin: 0 0 12px; opacity: .85; font-size: 13px; }
-    .search-wrap { position: relative; max-width: 860px; }
+    .search-wrap { position: relative; max-width: 860px; margin-bottom: 12px; }
     .search-wrap input {
       width: 100%;
       font-size: 18px;
@@ -57,13 +65,8 @@
     }
     nav.tabs {
       display: flex; gap: 6px; flex-wrap: wrap;
-      padding: 12px 20px 0;
+      padding: 0 0 8px;
       background: var(--paper);
-      position: sticky; top: 126px; z-index: 10;
-    }
-    @media (max-width: 640px) {
-      nav.tabs { top: 148px; }
-      header.app h1 { font-size: 17px; }
     }
     nav.tabs button {
       border: 1px solid var(--line);
@@ -171,16 +174,21 @@
   </style>
 </head>
 <body>
-  <header class="app">
-    <h1>2026–2027 第一次會議資料查詢</h1>
-    <p>由會議文件整理 · 輸入老師姓名／代號、班別、科目即可查</p>
+  <nav class="appbar">
+    <a href="老師.html">老師每日</a>
+    <a href="查詢.html?tool=free">空堂</a>
+    <a href="查詢.html?tool=common">共同空堂</a>
+    <a href="查詢.html?tool=klass">班級</a>
+    <a href="index.html" class="on">會議資料</a>
+  </nav>
+  <main id="mainWrap">
     <div class="search-wrap">
       <span class="search-ico">⌕</span>
       <input id="q" type="search" placeholder="例如：敏、林嘉敏、1A、中文、星期二、小息…" autocomplete="off" />
     </div>
-  </header>
-  <nav class="tabs" id="tabs"></nav>
-  <main id="main"></main>
+    <nav class="tabs" id="tabs"></nav>
+    <div id="main"></div>
+  </main>
   <footer>資料來源：第一次會議.docx · 僅供校內查閱 · 課節格子如原文為空白則未填老師</footer>
   <script>
 const DATA = {

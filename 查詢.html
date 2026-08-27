@@ -7,14 +7,6 @@
   <title>查詢工具</title>
   <link rel="stylesheet" href="heng.css" />
   <style>
-    .tools { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .tool-btn {
-      border: 1px solid var(--line); background: #fff; border-radius: 14px;
-      padding: 16px 14px; cursor: pointer; text-align: left; color: var(--ink);
-    }
-    .tool-btn b { display: block; color: var(--teal); font-size: 16px; margin-bottom: 4px; }
-    .tool-btn span { font-size: 13px; color: var(--muted); }
-    .tool-btn.on { border-color: var(--teal); background: #eef6f7; }
     .who-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
     .who-bar select { font-size: 16px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); }
     .chk-grid { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0; max-height: 240px; overflow: auto; }
@@ -44,10 +36,7 @@
     .day-block { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-bottom: 12px; }
     details { margin-top: 10px; }
     @media (max-width: 720px) {
-      header { padding: 14px 14px 12px; }
-      header h1 { font-size: 22px; }
       main { padding: 12px 12px 40px; }
-      .tools { grid-template-columns: 1fr; }
       .who-bar { flex-direction: column; align-items: stretch; }
       .who-bar select { width: 100%; }
       .slot { grid-template-columns: 72px 1fr; }
@@ -57,29 +46,14 @@
   </style>
 </head>
 <body>
-  <header>
-    <div class="who">獨立查詢</div>
-    <h1>查詢工具</h1>
-    <div class="links">
-      <a href="老師.html">老師每日</a>
-      <a href="index.html">全校資料</a>
-    </div>
-  </header>
+  <nav class="appbar">
+    <a href="老師.html">老師每日</a>
+    <a href="查詢.html?tool=free" data-tool="free">空堂</a>
+    <a href="查詢.html?tool=common" data-tool="common">共同空堂</a>
+    <a href="查詢.html?tool=klass" data-tool="klass">班級</a>
+    <a href="index.html">會議資料</a>
+  </nav>
   <main>
-    <div class="tools" id="tools">
-      <button type="button" class="tool-btn on" data-tool="free">
-        <b>空堂老師</b>
-        <span>查詢指定循環日或星期、節次中空堂的老師</span>
-      </button>
-      <button type="button" class="tool-btn" data-tool="common">
-        <b>共同空堂</b>
-        <span>查詢多位老師同時空堂的節次</span>
-      </button>
-      <button type="button" class="tool-btn" data-tool="klass">
-        <b>班級課表</b>
-        <span>查詢指定班級當日或本週課堂</span>
-      </button>
-    </div>
     <div class="nav" id="dateNav">
       <button type="button" id="prev">〈</button>
       <input type="date" id="picker" min="2026-08-01" max="2027-08-31" />
@@ -390,13 +364,6 @@
       else renderKlass();
     }
 
-    document.querySelectorAll(".tool-btn").forEach(b => {
-      b.onclick = () => {
-        tool = b.dataset.tool;
-        document.querySelectorAll(".tool-btn").forEach(x => x.classList.toggle("on", x === b));
-        render();
-      };
-    });
     document.getElementById("prev").onclick = () => { dateStr = clamp(shift(dateStr, -1)); render(); };
     document.getElementById("next").onclick = () => { dateStr = clamp(shift(dateStr, 1)); render(); };
     document.getElementById("todayBtn").onclick = () => { dateStr = clamp(iso(new Date())); render(); };
@@ -404,7 +371,7 @@
     const q = new URLSearchParams(location.search);
     if (q.get("d")) dateStr = q.get("d");
     if (q.get("tool")) tool = q.get("tool");
-    document.querySelectorAll(".tool-btn").forEach(b => b.classList.toggle("on", b.dataset.tool === tool));
+    document.querySelectorAll(".appbar a[data-tool]").forEach(a => a.classList.toggle("on", a.dataset.tool === tool));
     render();
   </script>
 </body>
