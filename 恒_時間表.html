@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    const q = new URLSearchParams(location.search);
+    q.set("t", "恒");
+    if (!q.get("view")) q.set("view", "week");
+    location.replace("老師.html?" + q.toString());
+  </script>
+</head>
+<body>
+  <p><a href="老師.html?t=恒&view=week">前往本週時間表</a></p>
+</body>
+</html>

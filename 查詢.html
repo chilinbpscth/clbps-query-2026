@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>查詢工具</title>
+  <link rel="stylesheet" href="heng.css" />
+  <style>
+    .tools { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .tool-btn {
+      border: 1px solid var(--line); background: #fff; border-radius: 14px;
+      padding: 16px 14px; cursor: pointer; text-align: left; color: var(--ink);
+    }
+    .tool-btn b { display: block; color: var(--teal); font-size: 16px; margin-bottom: 4px; }
+    .tool-btn span { font-size: 13px; color: var(--muted); }
+    .tool-btn.on { border-color: var(--teal); background: #eef6f7; }
+    .who-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .who-bar select { font-size: 16px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); }
+    .chk-grid { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0; max-height: 240px; overflow: auto; }
+    .chk { font-size: 14px; white-space: nowrap; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .chip { background: #d9eef2; color: var(--teal); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
+    .sub { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+    h3.card-h { margin: 0 0 10px; font-size: 16px; color: var(--teal); }
+    .rail { display: flex; flex-direction: column; gap: 8px; }
+    .slot {
+      display: grid; grid-template-columns: 96px 1fr;
+      border: 1px solid #d9d1c5; border-radius: 12px; background: #fff; overflow: hidden;
+    }
+    .slot.mine { border-color: #7eb6af; background: #f3faf8; }
+    .slot.free { background: #faf8f4; }
+    .slot-time {
+      padding: 10px 8px; font-size: 12px; font-variant-numeric: tabular-nums;
+      background: #efebe3; color: #44403c; display: flex; align-items: center; justify-content: center;
+      text-align: center; border-right: 1px solid #d9d1c5;
+    }
+    .slot.mine .slot-time { background: var(--teal); color: #fff; border-right-color: var(--teal); }
+    .slot-body { padding: 10px 12px; }
+    .slot-lab { font-size: 12px; color: var(--muted); }
+    .slot-what { font-size: 16px; font-weight: 700; }
+    .slot.free .slot-what { font-weight: 500; color: #a8a29e; }
+    .week-mobile { display: none; }
+    .day-block { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-bottom: 12px; }
+    details { margin-top: 10px; }
+    @media (max-width: 720px) {
+      header { padding: 14px 14px 12px; }
+      header h1 { font-size: 22px; }
+      main { padding: 12px 12px 40px; }
+      .tools { grid-template-columns: 1fr; }
+      .who-bar { flex-direction: column; align-items: stretch; }
+      .who-bar select { width: 100%; }
+      .slot { grid-template-columns: 72px 1fr; }
+      .week-desktop { display: none; }
+      .week-mobile { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="who">獨立查詢</div>
+    <h1>查詢工具</h1>
+    <div class="links">
+      <a href="老師.html">老師每日</a>
+      <a href="index.html">全校資料</a>
+    </div>
+  </header>
+  <main>
+    <div class="tools" id="tools">
+      <button type="button" class="tool-btn on" data-tool="free">
+        <b>空堂老師</b>
+        <span>查詢指定循環日或星期、節次中空堂的老師</span>
+      </button>
+      <button type="button" class="tool-btn" data-tool="common">
+        <b>共同空堂</b>
+        <span>查詢多位老師同時空堂的節次</span>
+      </button>
+      <button type="button" class="tool-btn" data-tool="klass">
+        <b>班級課表</b>
+        <span>查詢指定班級當日或本週課堂</span>
+      </button>
+    </div>
+    <div class="nav" id="dateNav">
+      <button type="button" id="prev">〈</button>
+      <input type="date" id="picker" min="2026-08-01" max="2027-08-31" />
+      <button type="button" id="next">〉</button>
+      <button type="button" class="primary" id="todayBtn">今天</button>
+    </div>
+    <div id="board"></div>
+  </main>
+  <footer>資料來源：老師總表、班時間表（8月28日版）及校曆表</footer>
+  <script src="calendar.js"></script>
+  <script src="teachers.js"></script>
+  <script src="classes.js"></script>
+  <script>
+    const AM = [
+      ["p1", "08:20–08:55", "第一節"], ["p2", "08:55–09:30", "第二節"],
+      ["p3", "09:30–10:05", "第三節"], ["r1", "10:05–10:20", "小息一"],
+      ["p4", "10:20–10:55", "第四節"], ["p5", "10:55–11:30", "第五節"],
+      ["r2", "11:30–11:50", "小息二"], ["p6", "11:50–12:25", "第六節"],
+      ["p7", "12:25–13:00", "第七節"]
+    ];
+    const AM_KEYS = AM.map(x => x[0]);
+    const picker = document.getElementById("picker");
+    const board = document.getElementById("board");
+    let tool = "free";
+    let dateStr = iso(new Date());
+
+    function iso(d) {
+      const z = n => String(n).padStart(2, "0");
+      return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+    }
+    function parseIso(s) {
+      const [y, m, d] = s.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function shift(s, n) { const d = parseIso(s); d.setDate(d.getDate() + n); return iso(d); }
+    function clamp(s) {
+      if (s < picker.min) return picker.min;
+      if (s > picker.max) return picker.max;
+      return s;
+    }
+    function cal(isoStr) { return (CAL.days || {})[isoStr]; }
+    function expand(raw) {
+      if (!raw) return { text: "", kind: "" };
+      if (raw === "當值") return { text: "早更當值", kind: "duty" };
+      if (/會議/.test(raw)) return { text: raw, kind: "meet" };
+      if (/備/.test(raw)) return { text: "備課：" + raw, kind: "prep" };
+      if (raw === "另見備忘") return { text: "健康生活（另見備忘）", kind: "class" };
+      let t = raw
+        .replace(/英外/g, "英文（外籍）")
+        .replace(/([0-9A-D協P\(\)]+)體/g, "$1 體育")
+        .replace(/([0-9A-D協P\(\)]+)資/g, "$1 資訊科技")
+        .replace(/([0-9A-D協P\(\)]+)常/g, "$1 常識")
+        .replace(/([0-9A-D協P\(\)]+)人/g, "$1 人文")
+        .replace(/([0-9A-D協P\(\)]+)科/g, "$1 科學")
+        .replace(/([0-9A-D協P\(\)]+)中/g, "$1 中文")
+        .replace(/([0-9A-D協P\(\)]+)英/g, "$1 英文")
+        .replace(/([0-9A-D協P\(\)]+)數/g, "$1 數學")
+        .replace(/([0-9A-D協P\(\)]+)音/g, "$1 音樂")
+        .replace(/([0-9A-D協P\(\)]+)視/g, "$1 視藝")
+        .replace(/([0-9A-D協P\(\)]+)普/g, "$1 普通話");
+      return { text: t.replace(/\s+/g, " ").trim(), kind: "class" };
+    }
+    function occupied(t, cycle, wd, key) {
+      if (key === "morning" || AM_KEYS.includes(key)) {
+        if (!cycle) return false;
+        return !!((t.am[String(cycle)] || {})[key]);
+      }
+      const pm = t.pm[String(wd)] || {};
+      if (key === "eighth") return !!(pm.eighth && pm.eighth.length);
+      return !!(pm[key]);
+    }
+    function slotRail(slots) {
+      return `<div class="rail">${slots.map(s => `
+        <article class="slot ${s.mine ? "mine" : "free"}">
+          <div class="slot-time">${s.time || "—"}</div>
+          <div class="slot-body">
+            ${s.label ? `<div class="slot-lab">${s.label}</div>` : ""}
+            <div class="slot-what">${s.text}</div>
+          </div>
+        </article>`).join("")}</div>`;
+    }
+    function weekdays(isoStr) {
+      const d = parseIso(isoStr);
+      const wd = d.getDay();
+      const diff = wd === 0 ? -6 : 1 - wd;
+      const mon = new Date(d); mon.setDate(d.getDate() + diff);
+      return [0,1,2,3,4].map(i => {
+        const x = new Date(mon); x.setDate(mon.getDate() + i);
+        return { date: x, iso: iso(x), wd: i + 1 };
+      });
+    }
+
+    function renderFree() {
+      const rec = cal(dateStr);
+      const wd = parseIso(dateStr).getDay();
+      const cycleOpts = [1,2,3,4,5,6].map(n => `<option value="${n}" ${rec && rec.cycle===n?"selected":""}>DAY ${n}</option>`).join("");
+      const wdOpts = [1,2,3,4,5].map(n => `<option value="${n}" ${wd===n?"selected":""}>星期${"一二三四五"[n-1]}</option>`).join("");
+      const amOpts = [["morning","早上 07:50"]].concat(AM.map(([k,_,l]) => [k,l])).map(([k,l]) => `<option value="${k}">${l}</option>`).join("");
+      const pmOpts = [["lunch","午膳"],["noon","午息"],["tut","導修"],["eighth","第八節"],["after","課後"]].map(([k,l]) => `<option value="${k}">${l}</option>`).join("");
+      board.innerHTML = `<article class="card">
+        <h3 class="card-h">空堂老師</h3>
+        <div class="who-bar">
+          <label>上午循環日 <select id="freeCycle">${cycleOpts}</select></label>
+          <label>節次 <select id="freeAm">${amOpts}</select></label>
+          <button type="button" class="primary" id="btnFreeAm">查詢上午</button>
+        </div>
+        <div class="who-bar">
+          <label>下午星期 <select id="freeWd">${wdOpts}</select></label>
+          <label>時段 <select id="freePm">${pmOpts}</select></label>
+          <button type="button" class="primary" id="btnFreePm">查詢下午</button>
+        </div>
+        <div id="freeOut"></div>
+      </article>`;
+      const paint = (free, busy, title) => {
+        document.getElementById("freeOut").innerHTML = `
+          <p><b>${title}</b>　空堂 ${free.length} 人</p>
+          <div class="chips">${free.map(t => `<span class="chip">${t.code} ${t.name}</span>`).join("") || "—"}</div>
+          <details><summary class="muted">該節有課堂或當值 ${busy.length} 人</summary>
+            <ul class="list">${busy.map(x => `<li>${x.t.code} ${x.t.name}　${x.text}</li>`).join("")}</ul>
+          </details>`;
+      };
+      const runAm = () => {
+        const c = Number(document.getElementById("freeCycle").value);
+        const k = document.getElementById("freeAm").value;
+        const lab = document.getElementById("freeAm").selectedOptions[0].text;
+        const free = TEACHERS.teachers.filter(t => !occupied(t, c, 0, k));
+        const busy = TEACHERS.teachers.filter(t => occupied(t, c, 0, k)).map(t => {
+          const raw = (t.am[String(c)] || {})[k] || "";
+          return { t, text: expand(raw).text };
+        });
+        paint(free, busy, `DAY ${c}　${lab}`);
+      };
+      const runPm = () => {
+        const w = Number(document.getElementById("freeWd").value);
+        const k = document.getElementById("freePm").value;
+        const lab = document.getElementById("freePm").selectedOptions[0].text;
+        const free = TEACHERS.teachers.filter(t => !occupied(t, 0, w, k));
+        const busy = TEACHERS.teachers.filter(t => occupied(t, 0, w, k)).map(t => {
+          const pm = t.pm[String(w)] || {};
+          const raw = k === "eighth" ? (pm.eighth || []).join("／") : (pm[k] || "");
+          return { t, text: expand(raw).text };
+        });
+        paint(free, busy, `星期${"一二三四五"[w-1]}　${lab}`);
+      };
+      document.getElementById("btnFreeAm").onclick = runAm;
+      document.getElementById("btnFreePm").onclick = runPm;
+      runAm();
+    }
+
+    function renderCommon() {
+      const boxes = TEACHERS.teachers.map(t =>
+        `<label class="chk"><input type="checkbox" value="${t.code}"> ${t.code} ${t.name}</label>`
+      ).join("");
+      board.innerHTML = `<article class="card">
+        <h3 class="card-h">共同空堂</h3>
+        <p class="muted">選取兩位或以上老師，查詢同時空堂的節次。</p>
+        <div class="who-bar">
+          <button type="button" id="btnAll">全選</button>
+          <button type="button" id="btnNone">清除</button>
+          <button type="button" class="primary" id="btnCommon">查詢</button>
+        </div>
+        <div class="chk-grid">${boxes}</div>
+        <div id="commonOut"></div>
+      </article>`;
+      document.getElementById("btnAll").onclick = () => board.querySelectorAll(".chk-grid input").forEach(i => i.checked = true);
+      document.getElementById("btnNone").onclick = () => board.querySelectorAll(".chk-grid input").forEach(i => i.checked = false);
+      document.getElementById("btnCommon").onclick = () => {
+        const codes = [...board.querySelectorAll(".chk-grid input:checked")].map(i => i.value);
+        if (codes.length < 2) {
+          document.getElementById("commonOut").innerHTML = `<p class="muted">請選取至少兩位老師。</p>`;
+          return;
+        }
+        const people = TEACHERS.teachers.filter(t => codes.includes(t.code));
+        const hits = [];
+        for (let c = 1; c <= 6; c++) {
+          [["morning","早上 07:50"]].concat(AM.map(([k,_,l]) => [k,l])).forEach(([k,l]) => {
+            if (people.every(t => !occupied(t, c, 0, k))) hits.push(`DAY ${c}　${l}`);
+          });
+        }
+        [["lunch","午膳"],["noon","午息"],["tut","導修"],["eighth","第八節"],["after","課後"]].forEach(([k,l]) => {
+          for (let w = 1; w <= 5; w++) {
+            if (people.every(t => !occupied(t, 0, w, k))) hits.push(`星期${"一二三四五"[w-1]}　${l}`);
+          }
+        });
+        document.getElementById("commonOut").innerHTML = `
+          <p><b>${people.map(t => t.code).join("／")}</b>　共同空堂 ${hits.length} 節</p>
+          <ul class="list">${hits.map(x => `<li>${x}</li>`).join("") || "<li>沒有共同空堂</li>"}</ul>`;
+      };
+    }
+
+    function findClass(code) {
+      const list = (typeof CLASSES !== "undefined" && CLASSES.classes) ? CLASSES.classes : [];
+      return list.find(c => c.class === code);
+    }
+    function invertClass(code) {
+      const am = {1:{},2:{},3:{},4:{},5:{},6:{}};
+      const re = new RegExp("(^|[^0-9])" + code + "([^A-D]|$)");
+      TEACHERS.teachers.forEach(t => {
+        for (let d = 1; d <= 6; d++) {
+          const slots = t.am[String(d)] || {};
+          AM.forEach(([k]) => {
+            const raw = slots[k];
+            if (raw && re.test(raw)) {
+              am[d][k] = { subject: expand(raw).text, teacher: t.name, code: t.code, raw };
+            }
+          });
+        }
+      });
+      return { class: code, homeroom: "", am, pm: {} };
+    }
+
+    function renderKlass() {
+      const all = ["1A","1B","1C","2A","2B","2C","3A","3B","3C","4A","4B","4C","5A","5B","5C","5D","6A","6B","6C","6D"];
+      board.innerHTML = `<article class="card">
+        <h3 class="card-h">班級課表</h3>
+        <div class="who-bar">
+          <label>班級 <select id="clsSel">${all.map(c => `<option>${c}</option>`).join("")}</select></label>
+          <button type="button" class="primary" id="btnClsToday">當日</button>
+          <button type="button" id="btnClsWeek">本週</button>
+        </div>
+        <p class="muted" id="clsNote"></p>
+        <div id="clsOut"></div>
+      </article>`;
+      const note = () => {
+        const code = document.getElementById("clsSel").value;
+        document.getElementById("clsNote").textContent =
+          code === "1C" ? "1C 未見於官方班時間表檔案，以下由老師總表推算。" : "";
+      };
+      const showToday = () => {
+        note();
+        const code = document.getElementById("clsSel").value;
+        const rec = cal(dateStr);
+        const wd = parseIso(dateStr).getDay();
+        const info = findClass(code) || invertClass(code);
+        const cycle = rec && rec.cycle;
+        const slots = [];
+        if (cycle) {
+          AM.forEach(([k, time, lab]) => {
+            const les = (info.am[String(cycle)] || {})[k];
+            if (les && (les.subject || les.raw)) {
+              slots.push({ time, label: lab, text: (les.subject || les.raw) + (les.teacher ? " · " + les.teacher : ""), mine: true });
+            } else {
+              slots.push({ time, label: lab, text: "—", mine: false });
+            }
+          });
+        }
+        if (wd >= 1 && wd <= 5) {
+          const pm = info.pm[String(wd)] || {};
+          const prog = pm.program || (wd===1?"CREATE Learning":wd===2?"多元智能課":wd===3?"野孩子計劃":wd===4?"周會／戶外學習":"健康生活");
+          slots.push({ time: wd===5?"14:00–14:40":"14:20–15:20", label: "第八節", text: prog, mine: true });
+        }
+        document.getElementById("clsOut").innerHTML =
+          `<p><b>${code}</b>　${info.homeroom ? "班主任：" + info.homeroom + "　" : ""}${cycle ? "DAY " + cycle : ""}</p>` + slotRail(slots);
+      };
+      const showWeek = () => {
+        note();
+        const code = document.getElementById("clsSel").value;
+        const info = findClass(code) || invertClass(code);
+        const days = weekdays(dateStr);
+        let html = `<div class="week-desktop"><div class="table-wrap"><table class="tt"><tr><th>節次</th>`;
+        days.forEach(({ iso, wd, date }) => {
+          const rec = cal(iso);
+          html += `<th>星期${"一二三四五"[wd-1]} ${date.getMonth()+1}/${date.getDate()}<span class="sub">${rec && rec.cycle ? "DAY "+rec.cycle : ""}</span></th>`;
+        });
+        html += `</tr>`;
+        AM.forEach(([k, time, lab]) => {
+          html += `<tr><td class="lab">${lab}<div class="muted">${time}</div></td>`;
+          days.forEach(({ iso }) => {
+            const rec = cal(iso);
+            const les = rec && rec.cycle ? (info.am[String(rec.cycle)] || {})[k] : null;
+            const txt = les && (les.subject || les.raw) ? (les.subject + (les.teacher ? " · " + les.teacher : "")) : "—";
+            html += `<td class="${les && les.subject ? "mine" : "empty"}">${txt}</td>`;
+          });
+          html += `</tr>`;
+        });
+        html += `<tr><td class="lab">第八節</td>`;
+        days.forEach(({ wd }) => {
+          const pm = info.pm[String(wd)] || {};
+          const prog = pm.program || (wd===1?"CREATE":wd===2?"MI":wd===3?"野孩子":wd===4?"周會":"健康生活");
+          html += `<td>${prog}</td>`;
+        });
+        html += `</tr></table></div></div>`;
+        let mobile = `<div class="week-mobile">`;
+        days.forEach(({ iso, wd, date }) => {
+          const rec = cal(iso);
+          const cycle = rec && rec.cycle;
+          const items = [];
+          if (cycle) AM.forEach(([k, time, lab]) => {
+            const les = (info.am[String(cycle)] || {})[k];
+            if (les && (les.subject || les.raw)) items.push({ time, label: lab, text: les.subject + (les.teacher ? " · " + les.teacher : ""), mine: true });
+          });
+          const pm = info.pm[String(wd)] || {};
+          items.push({ time: wd===5?"14:00–14:40":"14:20–15:20", label: "第八節", text: pm.program || "—", mine: true });
+          mobile += `<section class="day-block"><h3>星期${"一二三四五"[wd-1]} ${date.getMonth()+1}月${date.getDate()}日　${cycle?"DAY "+cycle:""}</h3>${slotRail(items)}</section>`;
+        });
+        document.getElementById("clsOut").innerHTML = html + mobile + `</div>`;
+      };
+      document.getElementById("btnClsToday").onclick = showToday;
+      document.getElementById("btnClsWeek").onclick = showWeek;
+      showToday();
+    }
+
+    function render() {
+      picker.value = dateStr;
+      document.getElementById("dateNav").style.display = tool === "common" ? "none" : "";
+      if (tool === "free") renderFree();
+      else if (tool === "common") renderCommon();
+      else renderKlass();
+    }
+
+    document.querySelectorAll(".tool-btn").forEach(b => {
+      b.onclick = () => {
+        tool = b.dataset.tool;
+        document.querySelectorAll(".tool-btn").forEach(x => x.classList.toggle("on", x === b));
+        render();
+      };
+    });
+    document.getElementById("prev").onclick = () => { dateStr = clamp(shift(dateStr, -1)); render(); };
+    document.getElementById("next").onclick = () => { dateStr = clamp(shift(dateStr, 1)); render(); };
+    document.getElementById("todayBtn").onclick = () => { dateStr = clamp(iso(new Date())); render(); };
+    picker.onchange = () => { dateStr = clamp(picker.value); render(); };
+    const q = new URLSearchParams(location.search);
+    if (q.get("d")) dateStr = q.get("d");
+    if (q.get("tool")) tool = q.get("tool");
+    document.querySelectorAll(".tool-btn").forEach(b => b.classList.toggle("on", b.dataset.tool === tool));
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>老師每日查閱</title>
+  <link rel="stylesheet" href="heng.css" />
+  <style>
+    .who-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .who-bar label { display: flex; align-items: center; gap: 8px; }
+    .who-bar select { font-size: 16px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); max-width: 100%; }
+    .campus { font-size: 14px; color: var(--muted); margin: 4px 0 0; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .chip { background: #fde7d8; color: var(--coral); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
+    .chip.meet { background: #f3e8ff; color: #6b21a8; }
+    .sub { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+    .week-ev { display: block; font-size: 11px; color: var(--coral); font-weight: 400; margin-top: 2px; }
+    h3.card-h { margin: 0 0 8px; font-size: 15px; color: var(--teal-2); }
+    .chk-grid { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0; max-height: 240px; overflow: auto; padding: 4px 0; }
+    .chk { font-size: 14px; white-space: nowrap; }
+    details { margin-top: 10px; }
+
+    .rail { display: flex; flex-direction: column; gap: 8px; }
+    .slot {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      border: 1px solid #d9d1c5;
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .slot.mine { border-color: #7eb6af; background: #f3faf8; }
+    .slot.free { background: #faf8f4; }
+    .slot-time {
+      padding: 10px 8px;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      background: #efebe3;
+      color: #44403c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.25;
+      border-right: 1px solid #d9d1c5;
+    }
+    .slot.mine .slot-time { background: var(--teal); color: #fff; border-right-color: var(--teal); }
+    .slot-body { padding: 10px 12px; min-width: 0; }
+    .slot-lab { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+    .slot-what { font-size: 16px; font-weight: 700; line-height: 1.35; }
+    .slot.free .slot-what { font-weight: 500; color: #a8a29e; }
+
+    .week-mobile, .cycle-mobile { display: none; }
+    .day-block { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-bottom: 12px; }
+    .day-block h3 { margin: 0 0 10px; font-size: 16px; color: var(--teal); }
+    table.tt th:first-child, table.tt td:first-child { position: sticky; left: 0; z-index: 1; background: #eef6f7; }
+    table.tt td:first-child { background: #fff; }
+
+    @media (max-width: 720px) {
+      header { padding: 14px 14px 12px; }
+      header h1 { font-size: 22px; }
+      header p { display: none; }
+      main { padding: 12px 12px 40px; }
+      .who-bar { flex-direction: column; align-items: stretch; }
+      .who-bar label { width: 100%; }
+      .who-bar select { flex: 1; width: 100%; }
+      .who-bar .tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; width: 100%; margin: 0; }
+      .who-bar .tabs button { min-height: 40px; }
+      #dateNav {
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        grid-template-areas: "prev pick next" "today today today";
+      }
+      #dateNav #prev { grid-area: prev; }
+      #dateNav #picker { grid-area: pick; width: 100%; min-width: 0; }
+      #dateNav #next { grid-area: next; }
+      #dateNav #todayBtn { grid-area: today; width: 100%; }
+      .hero { padding: 14px; }
+      .hero .cycle { font-size: 30px; }
+      .slot { grid-template-columns: 72px 1fr; }
+      .slot-what { font-size: 15px; }
+      .week-desktop, .cycle-desktop { display: none; }
+      .week-mobile, .cycle-mobile { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="who">選擇老師，按日期檢視課堂與當值</div>
+    <h1 id="hdrName">老師每日</h1>
+    <div class="links">
+      <a href="查詢.html">查詢工具</a>
+      <a href="index.html">全校資料</a>
+    </div>
+  </header>
+  <main>
+    <div class="nav who-bar">
+      <label>老師
+        <select id="who"></select>
+      </label>
+      <span class="tabs" style="margin:0">
+        <button type="button" data-view="today" class="on">當日</button>
+        <button type="button" data-view="week">本週</button>
+        <button type="button" data-view="cycle">循環日</button>
+      </span>
+    </div>
+    <div class="nav" id="dateNav">
+      <button type="button" id="prev">〈</button>
+      <input type="date" id="picker" min="2026-08-01" max="2027-08-31" />
+      <button type="button" id="next">〉</button>
+      <button type="button" class="primary" id="todayBtn">今天</button>
+    </div>
+    <section class="hero" id="hero"></section>
+    <div id="board"></div>
+  </main>
+  <footer>時間表：老師總表 28/8 版　·　校曆：21-8-26 版　·　會議資料可稍後由試算表匯入</footer>
+  <script src="calendar.js"></script>
+  <script src="teachers.js"></script>
+  <script src="meetings.js"></script>
+    <script>
+    const DUTY = {
+      "中/4F": "中式花園／雨天 4/F",
+      "持/足/5F": "持咪；足球場／雨天 5/F",
+      "籃足/6F": "籃足球場之間／雨天 6/F",
+      "籃/5F": "籃球場／雨天 5/F",
+      "足/6F": "足球場／雨天 6/F"
+    };
+    const PRE = { 1: "靜觀行／早課", 2: "靜觀行／早課", 3: "靜觀行／早課", 4: "靜觀行／早課", 5: "球類運動" };
+    const ASM = { 1: "班級經營", 2: "悅讀閱樂／好書分享", 3: "升旗／國情短講", 4: "品德教育", 5: "早操" };
+    const AM = [
+      ["p1", "08:20–08:55", "第一節"],
+      ["p2", "08:55–09:30", "第二節"],
+      ["p3", "09:30–10:05", "第三節"],
+      ["r1", "10:05–10:20", "小息一"],
+      ["p4", "10:20–10:55", "第四節"],
+      ["p5", "10:55–11:30", "第五節"],
+      ["r2", "11:30–11:50", "小息二"],
+      ["p6", "11:50–12:25", "第六節"],
+      ["p7", "12:25–13:00", "第七節"]
+    ];
+
+    const picker = document.getElementById("picker");
+    const whoEl = document.getElementById("who");
+    const hero = document.getElementById("hero");
+    const board = document.getElementById("board");
+    const dateNav = document.getElementById("dateNav");
+    let view = "today";
+    let dateStr = iso(new Date());
+    let teacherCode = "恒";
+
+    function iso(d) {
+      const z = n => String(n).padStart(2, "0");
+      return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+    }
+    function parseIso(s) {
+      const [y, m, d] = s.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function shift(s, n) { const d = parseIso(s); d.setDate(d.getDate() + n); return iso(d); }
+    function clamp(s) {
+      if (s < picker.min) return picker.min;
+      if (s > picker.max) return picker.max;
+      return s;
+    }
+    function cal(isoStr) { return (CAL.days || {})[isoStr]; }
+    function teacher() {
+      return TEACHERS.teachers.find(t => t.code === teacherCode) || TEACHERS.teachers[0];
+    }
+    function isHol(rec) {
+      if (!rec) return false;
+      return (rec.flags || []).includes("公眾假期") || (rec.flags || []).includes("學校假期")
+        || /陸運會假期|農曆新年假期|聖誕及新年假期|復活節假期/.test((rec.events || []).join(" "));
+    }
+    function roomOf(raw) {
+      if (!raw || /備/.test(raw)) return "";
+      if (/體/.test(raw)) return "操場";
+      const g = raw.match(/([1-6])[A-D]/i);
+      const n = g ? g[1] : "";
+      if (/資/.test(raw)) return (n === "1" || n === "2" || n === "3") ? "101室" : "501室";
+      if (/科/.test(raw) && (n === "4" || n === "5" || n === "6")) return "607室";
+      return "";
+    }
+    function expand(raw) {
+      if (!raw) return null;
+      if (raw === "當值") return { text: "早更當值", kind: "duty", mine: true };
+      if (DUTY[raw]) return { text: "當值：" + DUTY[raw], kind: "duty", mine: true };
+      if (/\/F|操[一二]|持\/|籃\/|足\//.test(raw) && !/[1-6][A-D]/.test(raw))
+        return { text: "當值：" + raw, kind: "duty", mine: true };
+      if (/備/.test(raw)) {
+        let t = raw.replace(/科備/g, "科學備課").replace(/中備/g, "中文備課")
+          .replace(/英備/g, "英文備課").replace(/數備/g, "數學備課")
+          .replace(/人備/g, "人文備課").replace(/常備/g, "常識備課");
+        return { text: "備課：" + t, kind: "prep", mine: true };
+      }
+      if (raw === "另見備忘") return { text: "健康生活（另見備忘）", kind: "class", mine: true };
+      if (/會議/.test(raw)) return { text: raw, kind: "meet", mine: true };
+      let t = raw
+        .replace(/英外/g, "英文（外籍）")
+        .replace(/科備/g, "科學備課")
+        .replace(/([0-9A-D協P\(\)]+)體/g, "$1 體育")
+        .replace(/([0-9A-D協P\(\)]+)資/g, "$1 資訊科技")
+        .replace(/([0-9A-D協P\(\)]+)常/g, "$1 常識")
+        .replace(/([0-9A-D協P\(\)]+)人/g, "$1 人文")
+        .replace(/([0-9A-D協P\(\)]+)科/g, "$1 科學")
+        .replace(/([0-9A-D協P\(\)]+)中/g, "$1 中文")
+        .replace(/([0-9A-D協P\(\)]+)英/g, "$1 英文")
+        .replace(/([0-9A-D協P\(\)]+)數/g, "$1 數學")
+        .replace(/([0-9A-D協P\(\)]+)音/g, "$1 音樂")
+        .replace(/([0-9A-D協P\(\)]+)視/g, "$1 視藝")
+        .replace(/([0-9A-D協P\(\)]+)普/g, "$1 普通話");
+      t = t.replace(/\s+/g, " ").trim();
+      const room = roomOf(raw);
+      return { text: t + (room ? " · " + room : ""), kind: "class", mine: true };
+    }
+    function meetingsFor(isoStr, rec) {
+      const week = rec && rec.week;
+      return (MEETINGS.items || []).filter(m =>
+        (m.date && m.date === isoStr) || (!m.date && m.week && week && Number(m.week) === Number(week))
+      );
+    }
+    function calEvents(rec, isoStr) {
+      if (!rec) return [];
+      const out = [...(rec.events || [])];
+      for (const n of rec.weekNotes || []) {
+        if (!/\d{1,2}\/\d{1,2}/.test(n) && !out.includes(n)) out.push(n);
+      }
+      return out;
+    }
+
+    function buildDaySlots(t, isoStr) {
+      const d = parseIso(isoStr);
+      const wd = d.getDay();
+      const rec = cal(isoStr);
+      const hol = isHol(rec);
+      const slots = [];
+      if (wd === 0 || wd === 6) return { rec, wd, hol, slots, campus: "" };
+      const campus = [PRE[wd], ASM[wd]].filter(Boolean).join(" · ");
+      if (hol) {
+        slots.push({ time: "", label: "", text: "假期", mine: false, free: true });
+        return { rec, wd, hol, slots, campus };
+      }
+      const am = (rec && rec.cycle && t.am[String(rec.cycle)]) || {};
+      const pm = t.pm[String(wd)] || {};
+      if (am.morning) {
+        const x = expand(am.morning);
+        slots.push({ time: "07:50–08:20", label: "早上", text: x.text, mine: true });
+      }
+      if (rec && rec.cycle) {
+        for (const [k, time, lab] of AM) {
+          const raw = am[k];
+          if (raw) {
+            const x = expand(raw);
+            slots.push({ time, label: lab, text: x.text, mine: true, kind: x.kind });
+          } else if (k.startsWith("r")) {
+            slots.push({ time, label: lab, text: "無需當值", mine: false, free: true });
+          } else {
+            slots.push({ time, label: lab, text: "空堂", mine: false, free: true });
+          }
+        }
+      } else if (rec && ((rec.flags || []).includes("考試") || (rec.flags || []).includes("非循環日"))) {
+        slots.push({ time: "上午", label: "", text: (rec.flags || []).includes("考試") ? "考試日（無循環堂）" : "特別日活動", mine: false, free: true });
+      }
+      if (pm.lunch) slots.push({ time: "13:00–13:40", label: "午膳", text: "當值 " + pm.lunch + " 班", mine: true });
+      else slots.push({ time: "13:00–13:40", label: "午膳", text: "無需當值", mine: false, free: true });
+      if (pm.noon) slots.push({ time: "13:40–14:00", label: "午息", text: expand(pm.noon).text, mine: true });
+      else slots.push({ time: "13:40–14:00", label: "午息", text: "無需當值", mine: false, free: true });
+      if (pm.tut) slots.push({ time: "14:00–14:20", label: "導修", text: expand(pm.tut).text, mine: true });
+      const eighth = pm.eighth || [];
+      if (eighth.length) {
+        const same = eighth.every(s => s === eighth[0]);
+        const time = wd === 5 ? "14:00–14:40" : "14:20–15:20";
+        const parts = same ? [expand(eighth[0]).text] : eighth.map((s, i) => (i + 1) + ". " + expand(s).text);
+        slots.push({ time, label: "第八節", text: parts.join("　"), mine: true });
+      }
+      if (pm.after) slots.push({ time: "15:20 後", label: "課後", text: pm.after + " · 簽走 17:05", mine: true });
+      else slots.push({ time: "15:20 後", label: "課後", text: "簽走 16:30", mine: false, free: true });
+      const extra = meetingsFor(isoStr, rec).filter(m => m.time);
+      extra.forEach(m => slots.push({ time: m.time, label: "會議", text: m.title + (m.who ? "（" + m.who + "）" : ""), mine: true, kind: "meet" }));
+      return { rec, wd, hol, slots, campus };
+    }
+
+    function renderToday() {
+      dateNav.style.display = "";
+      const t = teacher();
+      const d = parseIso(dateStr);
+      const { rec, wd, hol, slots, campus } = buildDaySlots(t, dateStr);
+      const weekName = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][wd];
+      const ymd = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+      const cycle = rec && rec.cycle ? "DAY " + rec.cycle : (hol ? "假期" : (rec ? "無循環" : "校曆無此日"));
+      const ev = calEvents(rec, dateStr);
+      const meets = meetingsFor(dateStr, rec);
+      hero.innerHTML = `
+        <div class="date">${ymd}　${weekName}</div>
+        <div class="cycle ${rec && rec.cycle ? "" : "none"}">${cycle}</div>
+        <div class="muted">${rec && rec.week ? "第 " + rec.week + " 週" : ""} ${rec && rec.theme ? " · " + rec.theme : ""}</div>
+        <div class="chips">
+          ${ev.map(e => `<span class="chip">${e}</span>`).join("")}
+          ${meets.map(m => `<span class="chip meet">${m.time ? m.time + " " : ""}${m.title}</span>`).join("")}
+        </div>
+        ${campus ? `<div class="campus">課前／早會：${campus}</div>` : ""}
+      `;
+      board.innerHTML = slotRail(slots);
+    }
+
+    function slotRail(slots) {
+      return `<div class="rail">${slots.map(s => `
+        <article class="slot ${s.mine ? "mine" : "free"}">
+          <div class="slot-time">${s.time || "—"}</div>
+          <div class="slot-body">
+            ${s.label ? `<div class="slot-lab">${s.label}</div>` : ""}
+            <div class="slot-what">${s.text}</div>
+          </div>
+        </article>`).join("")}</div>`;
+    }
+
+    function weekdays(isoStr) {
+      const d = parseIso(isoStr);
+      const wd = d.getDay();
+      const diff = wd === 0 ? -6 : 1 - wd;
+      const mon = new Date(d); mon.setDate(d.getDate() + diff);
+      return [0,1,2,3,4].map(i => {
+        const x = new Date(mon); x.setDate(mon.getDate() + i);
+        return { date: x, iso: iso(x), wd: i + 1 };
+      });
+    }
+
+    function renderWeek() {
+      dateNav.style.display = "";
+      const t = teacher();
+      const days = weekdays(dateStr);
+      hero.innerHTML = `<div class="muted">本週星期一至五之課堂與當值。</div>`;
+      const rows = [["07:50–08:20","早上","morning"]].concat(AM.map(([k,time,lab]) => [time, lab, k]));
+      rows.push(["13:00–13:40","午膳","lunch"], ["13:40–14:00","午息","noon"], ["14:20–15:20","第八節","eighth"], ["15:20 後","課後","after"]);
+      let html = `<div class="week-desktop"><div class="table-wrap"><table class="tt"><tr><th>時間</th>`;
+      days.forEach(({ iso, wd, date }) => {
+        const rec = cal(iso);
+        const day = rec && rec.cycle ? "DAY " + rec.cycle : (isHol(rec) ? "假期" : "");
+        const ev = calEvents(rec, iso).slice(0, 2);
+        const meets = meetingsFor(iso, rec);
+        html += `<th>星期${"一二三四五"[wd-1]} ${date.getMonth()+1}/${date.getDate()}
+          <span class="sub">${day}</span>
+          ${ev.concat(meets.map(m => m.title)).map(e => `<span class="week-ev">${e}</span>`).join("")}
+        </th>`;
+      });
+      html += `</tr>`;
+      for (const [time, lab, key] of rows) {
+        html += `<tr><td class="time">${time}<div class="muted">${lab}</div></td>`;
+        days.forEach(({ iso, wd }) => {
+          const rec = cal(iso);
+          const packed = buildDaySlots(t, iso);
+          const hit = packed.slots.find(s =>
+            (key === "morning" && s.time.startsWith("07:50")) ||
+            (key === "lunch" && s.label === "午膳" && s.mine) ||
+            (key === "noon" && s.label === "午息" && s.mine) ||
+            (key === "eighth" && s.label === "第八節") ||
+            (key === "after" && s.label === "課後" && s.mine) ||
+            (s.label === lab && s.mine)
+          );
+          const free = packed.slots.find(s => s.label === lab);
+          const cell = hit || (key.length <= 2 || key.startsWith("p") || key.startsWith("r") ? free : null);
+          if (isHol(rec)) html += `<td class="hol">假期</td>`;
+          else if (hit) html += `<td class="mine">${hit.text}</td>`;
+          else if (free && free.free) html += `<td class="empty">${free.text}</td>`;
+          else html += `<td class="empty">—</td>`;
+        });
+        html += `</tr>`;
+      }
+      html += `</table></div></div>`;
+      let mobile = `<div class="week-mobile">`;
+      days.forEach(({ iso, wd, date }) => {
+        const rec = cal(iso);
+        const packed = buildDaySlots(t, iso);
+        const day = rec && rec.cycle ? "DAY " + rec.cycle : (isHol(rec) ? "假期" : "");
+        const ev = calEvents(rec, iso);
+        mobile += `<section class="day-block">
+          <h3>星期${"一二三四五"[wd-1]} ${date.getMonth()+1}月${date.getDate()}日　${day}</h3>
+          ${ev.length ? `<div class="chips">${ev.map(e => `<span class="chip">${e}</span>`).join("")}</div>` : ""}
+          ${slotRail(packed.slots.filter(s => s.mine || isHol(rec)))}
+        </section>`;
+      });
+      mobile += `</div>`;
+      board.innerHTML = html + mobile;
+    }
+
+    function renderCycle() {
+      dateNav.style.display = "none";
+      const t = teacher();
+      hero.innerHTML = `<div class="muted">上午六日循環課堂。下午請查看「本週」或「當日」。</div>`;
+      let html = `<div class="cycle-desktop"><div class="table-wrap"><table class="tt"><tr><th>節</th>`;
+      for (let c = 1; c <= 6; c++) html += `<th>DAY ${c}</th>`;
+      html += `</tr>`;
+      html += `<tr><td class="lab">早上</td>`;
+      for (let c = 1; c <= 6; c++) {
+        const raw = (t.am[String(c)] || {}).morning;
+        const x = raw ? expand(raw) : null;
+        html += `<td class="${x && x.mine ? "mine" : "empty"}">${x ? x.text : "—"}</td>`;
+      }
+      html += `</tr>`;
+      for (const [k, time, lab] of AM) {
+        html += `<tr><td class="lab">${lab}<div class="muted">${time}</div></td>`;
+        for (let c = 1; c <= 6; c++) {
+          const raw = (t.am[String(c)] || {})[k];
+          const x = raw ? expand(raw) : null;
+          html += `<td class="${x && x.mine ? "mine" : "empty"}">${x ? x.text : (k.startsWith("r") ? "無需當值" : "空堂")}</td>`;
+        }
+        html += `</tr>`;
+      }
+      html += `</table></div></div>`;
+      let mobile = `<div class="cycle-mobile">`;
+      for (let c = 1; c <= 6; c++) {
+        const am = t.am[String(c)] || {};
+        const items = [];
+        if (am.morning) items.push({ time: "07:50–08:20", label: "早上", text: expand(am.morning).text, mine: true });
+        for (const [k, time, lab] of AM) {
+          const raw = am[k];
+          if (raw) items.push({ time, label: lab, text: expand(raw).text, mine: true });
+        }
+        mobile += `<section class="day-block"><h3>DAY ${c}</h3>${items.length ? slotRail(items) : `<p class="muted">呢日上午無你嘅堂／當值</p>`}</section>`;
+      }
+      mobile += `</div>`;
+      board.innerHTML = html + mobile;
+    }
+
+    function render() {
+      const t = teacher();
+      document.getElementById("hdrName").textContent = t.name + "（" + t.code + "）";
+      document.title = t.name + " · 每日查閱";
+      if (view === "today") renderToday();
+      else if (view === "week") renderWeek();
+      else if (view === "cycle") renderCycle();
+      
+      try {
+        localStorage.setItem("heng-date", dateStr);
+        localStorage.setItem("teacher-code", teacherCode);
+      } catch (e) {}
+    }
+
+    TEACHERS.teachers.forEach(t => {
+      const o = document.createElement("option");
+      o.value = t.code;
+      o.textContent = (t.no ? t.no + ". " : "") + t.code + " " + t.name;
+      whoEl.appendChild(o);
+    });
+
+    const params = new URLSearchParams(location.search);
+    if (params.get("t")) teacherCode = params.get("t");
+    else try { const s = localStorage.getItem("teacher-code"); if (s) teacherCode = s; } catch (e) {}
+    if (params.get("d")) dateStr = params.get("d");
+    else try { const s = localStorage.getItem("heng-date"); if (s) dateStr = s; } catch (e) {}
+    if (params.get("view")) view = params.get("view");
+    whoEl.value = teacherCode;
+    picker.value = dateStr;
+    document.querySelectorAll("[data-view]").forEach(b => {
+      b.classList.toggle("on", b.dataset.view === view);
+      b.onclick = () => {
+        view = b.dataset.view;
+        document.querySelectorAll("[data-view]").forEach(x => x.classList.toggle("on", x === b));
+        render();
+      };
+    });
+    whoEl.onchange = () => { teacherCode = whoEl.value; render(); };
+    document.getElementById("prev").onclick = () => { dateStr = clamp(shift(dateStr, view === "week" ? -7 : -1)); picker.value = dateStr; render(); };
+    document.getElementById("next").onclick = () => { dateStr = clamp(shift(dateStr, view === "week" ? 7 : 1)); picker.value = dateStr; render(); };
+    document.getElementById("todayBtn").onclick = () => { dateStr = clamp(iso(new Date())); picker.value = dateStr; render(); };
+    picker.onchange = () => { dateStr = clamp(picker.value); render(); };
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,6904 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>2026–2027 第一次會議資料查詢</title>
+  <style>
+    :root {
+      --ink: #1c1917;
+      --muted: #57534e;
+      --line: #e7e0d6;
+      --paper: #fbf7f0;
+      --card: #ffffff;
+      --teal: #0f4c5c;
+      --teal-2: #16697a;
+      --gold: #c4a35a;
+      --coral: #c2410c;
+      --chip: #eef6f7;
+      --ok: #166534;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang TC", "Noto Sans TC", "Hiragino Sans CNS", "Heiti TC", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    header.app {
+      position: sticky; top: 0; z-index: 20;
+      background: var(--teal);
+      color: #fff;
+      padding: 16px 20px 14px;
+      box-shadow: 0 8px 24px rgba(15, 76, 92, .22);
+    }
+    header.app h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+    header.app p { margin: 0 0 12px; opacity: .85; font-size: 13px; }
+    .search-wrap { position: relative; max-width: 860px; }
+    .search-wrap input {
+      width: 100%;
+      font-size: 18px;
+      padding: 12px 16px 12px 44px;
+      border: 0;
+      border-radius: 12px;
+      outline: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+    .search-ico {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      opacity: .45; font-size: 16px; pointer-events: none;
+    }
+    nav.tabs {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      padding: 12px 20px 0;
+      background: var(--paper);
+      position: sticky; top: 126px; z-index: 10;
+    }
+    @media (max-width: 640px) {
+      nav.tabs { top: 148px; }
+      header.app h1 { font-size: 17px; }
+    }
+    nav.tabs button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--teal);
+      padding: 7px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    nav.tabs button.active {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+    main { padding: 16px 20px 64px; max-width: 1100px; }
+    .hint {
+      color: var(--muted); font-size: 14px; margin: 8px 0 16px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; max-width: 100%; }
+    @media (max-width: 640px) {
+      .chip, .tchip { font-size: 13px; padding: 6px 9px; }
+      .search-wrap input { font-size: 16px; } /* avoid iOS zoom */
+    }
+    .chip, .tchip {
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--teal);
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .tchip { background: #fff; }
+    .tchip b { color: var(--coral); margin-right: 4px; }
+    .tchip.active, .chip.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .tchip.active b { color: #fde68a; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(28,25,23,.04);
+    }
+    .card h2, .card h3 { margin: 0 0 8px; }
+    .card h2 { font-size: 18px; color: var(--teal); }
+    .card h3 { font-size: 15px; color: var(--teal-2); margin-top: 14px; }
+    .meta { color: var(--muted); font-size: 13px; }
+    .kv { display: grid; grid-template-columns: 88px 1fr; gap: 4px 10px; font-size: 14px; }
+    .kv dt { color: var(--muted); }
+    .kv dd { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f0f7f8; color: var(--teal); font-weight: 600; white-space: nowrap; }
+    .table-wrap { overflow-x: auto; margin: 8px 0 16px; border-radius: 10px; }
+    .empty { padding: 40px 10px; text-align: center; color: var(--muted); }
+    .badge {
+      display: inline-block;
+      background: #fde7d8;
+      color: var(--coral);
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+    .badge.teal { background: #d9eef2; color: var(--teal); }
+    .badge.gold { background: #f4ead0; color: #7a5b12; }
+    .duty-item {
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--line);
+      font-size: 14px;
+    }
+    .duty-item:last-child { border-bottom: 0; }
+    .hl { background: #fff3bf; padding: 0 2px; border-radius: 3px; }
+    .welcome { max-width: 860px; }
+    .stat {
+      display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 18px;
+    }
+    .stat span {
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      padding: 10px 14px; font-size: 13px;
+    }
+    .stat b { display: block; font-size: 20px; color: var(--teal); }
+    footer {
+      color: var(--muted); font-size: 12px; padding: 8px 20px 24px;
+    }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 800px) { .row-2 { grid-template-columns: 1fr; } }
+    .name-line { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .name-line .code {
+      font-size: 28px; color: var(--coral); font-weight: 800; line-height: 1;
+    }
+    a.linkish { color: var(--teal-2); cursor: pointer; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="app">
+    <h1>2026–2027 第一次會議資料查詢</h1>
+    <p>由會議文件整理 · 輸入老師姓名／代號、班別、科目即可查</p>
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input id="q" type="search" placeholder="例如：敏、林嘉敏、1A、中文、星期二、小息…" autocomplete="off" />
+    </div>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <main id="main"></main>
+  <footer>資料來源：第一次會議.docx · 僅供校內查閱 · 課節格子如原文為空白則未填老師</footer>
+  <script>
+const DATA = {
+  "title": "2026 至 2027 年度第一次會議資料查詢",
+  "source": "第一次會議.docx",
+  "periods": {
+    "grades": [
+      "小一",
+      "小二",
+      "小三",
+      "小四",
+      "小五",
+      "小六"
+    ],
+    "rows": [
+      {
+        "subject": "中文",
+        "byGrade": {
+          "小一": "10",
+          "小二": "10",
+          "小三": "11",
+          "小四": "11",
+          "小五": "11",
+          "小六": "11"
+        }
+      },
+      {
+        "subject": "英文",
+        "byGrade": {
+          "小一": "9",
+          "小二": "9",
+          "小三": "9",
+          "小四": "9",
+          "小五": "9",
+          "小六": "9"
+        }
+      },
+      {
+        "subject": "數學",
+        "byGrade": {
+          "小一": "6",
+          "小二": "6",
+          "小三": "6",
+          "小四": "6",
+          "小五": "6",
+          "小六": "6"
+        }
+      },
+      {
+        "subject": "科學",
+        "byGrade": {
+          "小一": "3",
+          "小二": "3",
+          "小三": "",
+          "小四": "3",
+          "小五": "3",
+          "小六": ""
+        }
+      },
+      {
+        "subject": "人文",
+        "byGrade": {
+          "小一": "3",
+          "小二": "3",
+          "小三": "",
+          "小四": "3",
+          "小五": "3",
+          "小六": ""
+        }
+      },
+      {
+        "subject": "常識",
+        "byGrade": {
+          "小一": "",
+          "小二": "",
+          "小三": "6",
+          "小四": "",
+          "小五": "",
+          "小六": "6"
+        }
+      },
+      {
+        "subject": "視藝",
+        "byGrade": {
+          "小一": "2",
+          "小二": "2",
+          "小三": "2",
+          "小四": "2",
+          "小五": "2",
+          "小六": "2"
+        }
+      },
+      {
+        "subject": "音樂",
+        "byGrade": {
+          "小一": "2",
+          "小二": "2",
+          "小三": "2",
+          "小四": "2",
+          "小五": "2",
+          "小六": "2"
+        }
+      },
+      {
+        "subject": "體育",
+        "byGrade": {
+          "小一": "2",
+          "小二": "2",
+          "小三": "2",
+          "小四": "2",
+          "小五": "2",
+          "小六": "2"
+        }
+      },
+      {
+        "subject": "資訊科技",
+        "byGrade": {
+          "小一": "2",
+          "小二": "2",
+          "小三": "2",
+          "小四": "2",
+          "小五": "2",
+          "小六": "2"
+        }
+      },
+      {
+        "subject": "普通話",
+        "byGrade": {
+          "小一": "2",
+          "小二": "2",
+          "小三": "1",
+          "小四": "1",
+          "小五": "1",
+          "小六": "1"
+        }
+      },
+      {
+        "subject": "生命教育",
+        "byGrade": {
+          "小一": "1",
+          "小二": "1",
+          "小三": "1",
+          "小四": "1",
+          "小五": "1",
+          "小六": "1"
+        }
+      },
+      {
+        "subject": "合計",
+        "byGrade": {
+          "小一": "42",
+          "小二": "42",
+          "小三": "42",
+          "小四": "42",
+          "小五": "42",
+          "小六": "42"
+        }
+      }
+    ],
+    "notes": [
+      "上午（DAY 1 至 DAY 6）共 42 節（7 節 × 6）",
+      "下午（星期一至星期四）共 6 節（1.5 節 × 4），分三個學段，每學段 0.5 節",
+      "下午（星期五）共 1 節",
+      "全星期總節數 49 節"
+    ]
+  },
+  "loadNotes": [
+    "基本老師課堂為 30 節",
+    "中英數科主席 26 節；常識／科學科主席 26 節；人文科主席 27 節；視體音普資科主席 28 節",
+    "SEN 老師 27 節",
+    "4A／5A 中英數人科老師減 1 節",
+    "各老師會因應各行政工作扣減課堂節數"
+  ],
+  "sen": [
+    "穩",
+    "瑤",
+    "倩",
+    "華"
+  ],
+  "signIn": {
+    "duty": "所有當值老師：07:35",
+    "others": "其他老師：07:40",
+    "lunchOutDuty": "13:00–13:40（如需 13:40–14:00 當值）",
+    "lunchOutFree": "13:00–13:55（如無需 13:40–14:00 當值）",
+    "leaveNoMeeting": "沒有會議或課後活動：16:30",
+    "leaveActivity": "有課後活動：17:05",
+    "lateStay": "全校老師輪流留校至 18:35 處理行政事務（另見「在校課後託管服務計劃」文件）",
+    "adminMeeting": "星期二放學後為行政會議"
+  },
+  "dutyIndex": {
+    "tutorial": "導修課由班主任負責",
+    "lunchHomeroom": "班主任：每周午膳當值 3 天",
+    "lunchOthers": "非班／行政老師：每周午膳當值 2–3 天",
+    "lunchVP": "副校長：每周午膳當值 1 天",
+    "recess": "小息當值 4–5 次",
+    "library": "瑩負責圖書館當值",
+    "morning": "早上、放學當值及放學後校外巡視由訓輔組安排",
+    "patrol": "清／呂／蔚巡視各當值情況"
+  },
+  "timetable": {
+    "morning": [
+      {
+        "time": "07:40–08:00 課前",
+        "mon": "靜觀行／早課",
+        "tue": "靜觀行／早課",
+        "wed": "靜觀行／早課",
+        "thu": "靜觀行／早課",
+        "fri": "球類運動"
+      },
+      {
+        "time": "08:00–08:10 早會",
+        "mon": "班級經營",
+        "tue": "悅讀閱樂／好書分享",
+        "wed": "升旗／國情短講",
+        "thu": "品德教育",
+        "fri": "早操"
+      },
+      {
+        "time": "08:10–08:20 班主任節",
+        "mon": "班主任節",
+        "tue": "班主任節",
+        "wed": "班主任節",
+        "thu": "班主任節",
+        "fri": "班主任節"
+      }
+    ],
+    "lessons": [
+      {
+        "period": "第一節",
+        "time": "08:20–08:55"
+      },
+      {
+        "period": "第二節",
+        "time": "08:55–09:30"
+      },
+      {
+        "period": "第三節",
+        "time": "09:30–10:05"
+      },
+      {
+        "period": "小息一",
+        "time": "10:05–10:20",
+        "note": "玩具趣趣（樓層小息）"
+      },
+      {
+        "period": "第四節",
+        "time": "10:20–10:55"
+      },
+      {
+        "period": "第五節",
+        "time": "10:55–11:30"
+      },
+      {
+        "period": "小息二",
+        "time": "11:30–11:50",
+        "note": "活力小息（操場小息）"
+      },
+      {
+        "period": "第六節",
+        "time": "11:50–12:25"
+      },
+      {
+        "period": "第七節",
+        "time": "12:25–13:00"
+      }
+    ],
+    "lunch": {
+      "time": "13:00–14:00",
+      "note": "午膳 13:00–13:40／小息 13:40–14:00"
+    },
+    "afternoonP13": [
+      {
+        "time": "14:00–14:20",
+        "mon": "導修課",
+        "tue": "導修課",
+        "wed": "導修課",
+        "thu": "導修課",
+        "fri": "14:00–14:40 健康生活（全人運動）"
+      },
+      {
+        "time": "14:20–15:20 第八節",
+        "mon": "CREATE Learning（三學段）",
+        "tue": "多元智能課 MI",
+        "wed": "野孩子計劃（三學段）",
+        "thu": "周會／戶外學習（三學段）",
+        "fri": "（接上）"
+      }
+    ],
+    "afternoonP46": [
+      {
+        "time": "14:00–14:20",
+        "mon": "導修課",
+        "tue": "導修課",
+        "wed": "導修課",
+        "thu": "導修課",
+        "fri": "14:00–14:40 健康生活（全人運動）"
+      },
+      {
+        "time": "14:20–15:20 第八節",
+        "mon": "CREATE Learning（三學段）",
+        "tue": "多元智能課 MI（4(1)–4(4)）",
+        "wed": "野孩子計劃（三學段）",
+        "thu": "周會／戶外學習（三學段）",
+        "fri": "（接上）"
+      }
+    ],
+    "prepExtra": [
+      "星期二課後：行政會",
+      "星期一／四：P4 科學校外支援（智／燕／恒）",
+      "星期四：P5 人文校外支援（何／瑤／談／仁）（杰）"
+    ]
+  },
+  "teachers": [
+    {
+      "no": "1",
+      "name": "林嘉敏",
+      "code": "敏",
+      "homeroom": "1A",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "1A *4A",
+          "star": true
+        },
+        {
+          "subject": "視藝",
+          "classes": "1A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "24",
+      "liaison": "P1中 / P1視",
+      "chairOf": [],
+      "viceOf": [
+        "中"
+      ],
+      "gradeContact": [
+        "中・一年級",
+        "視・一年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 2",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 4",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "1A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "1A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "1A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 3",
+            "period": "第六節 11:50–12:25",
+            "text": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)"
+          },
+          {
+            "day": "DAY 2",
+            "period": "第七節 12:25–13:00",
+            "text": "P1中備(敏/梅/瑤)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "中文(低)(李/敏)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "2",
+      "name": "姚佩慈",
+      "code": "佩",
+      "homeroom": "1A",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "1A 3B",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "2A",
+          "star": false
+        },
+        {
+          "subject": "體育",
+          "classes": "1B+1C 2A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "1A",
+        "tue": "0.5",
+        "wed": "1.5",
+        "thu": "1A",
+        "fri": "1"
+      },
+      "periods": "25",
+      "liaison": "P3數",
+      "chairOf": [
+        "體"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "數・三年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 4",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 3",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 5",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "1A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "1A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "3B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第一節 08:20–08:55",
+            "text": "P1數備(佩/趙/軒)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第一節 08:20–08:55",
+            "text": "P3數備(佩/碧/趙)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第七節 12:25–13:00",
+            "text": "P2科備(智/佩/燕)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "游泳校隊至1730) (佩/外聘)(泳池)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "3",
+      "name": "林淑梅",
+      "code": "梅",
+      "homeroom": "1B",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "1B",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "4B",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "4B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "4B",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "4B (1)",
+        "fri": "1"
+      },
+      "periods": "20.5",
+      "liaison": "P4普",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "普・四年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 3",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "1B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期二",
+            "class": "1B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "1B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "操二至洗手間",
+            "rain": "2/F梅",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          },
+          {
+            "day": "DAY 2",
+            "period": "第七節 12:25–13:00",
+            "text": "P1中備(敏/梅/瑤)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "正能量(P1)(梅/趙/奕)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "4",
+      "name": "趙詠琪",
+      "code": "趙",
+      "homeroom": "1B",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "1B 3C",
+          "star": false
+        },
+        {
+          "subject": "常識",
+          "classes": "6D",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "1B+1C 3C",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "1C",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "1B",
+        "fri": "1"
+      },
+      "periods": "29",
+      "liaison": "P1數",
+      "chairOf": [],
+      "viceOf": [
+        "數"
+      ],
+      "gradeContact": [
+        "數・一年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 3",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 4",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期三",
+            "class": "1B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "1B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "6D",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期一",
+            "sunny": "操一",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第一節 08:20–08:55",
+            "text": "P1數備(佩/趙/軒)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第一節 08:20–08:55",
+            "text": "P3數備(佩/碧/趙)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第二節 08:55–09:30",
+            "text": "P6常備 (趙/符/瑩/蔚)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "中國舞校隊(1530－1730) (趙/外聘)(G02) (行政工作)"
+          },
+          {
+            "day": "星期二",
+            "text": "正能量(P1)(梅/趙/奕)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "5",
+      "name": "黃凱瑤",
+      "code": "瑤",
+      "homeroom": "1C",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "1C 4C",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "5B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "0.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P4中",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "中・四年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 2",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 1",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "1C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "1C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "1C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期一",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第三節 09:30–10:05",
+            "text": "P5人備 (何/瑤/談/仁)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第六節 11:50–12:25",
+            "text": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)"
+          },
+          {
+            "day": "DAY 2",
+            "period": "第七節 12:25–13:00",
+            "text": "P1中備(敏/梅/瑤)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "P5人文科(何瑤談仁)(杰) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "6",
+      "name": "謝文軒",
+      "code": "軒",
+      "homeroom": "1C",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "1C",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "2C 4C",
+          "star": false
+        },
+        {
+          "subject": "生命教育",
+          "classes": "3AC 4AC 5AB 5C6C",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "2C",
+        "tue": "1.5",
+        "wed": "0.5",
+        "thu": "1C",
+        "fri": "1"
+      },
+      "periods": "26",
+      "liaison": "P4人",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "人文・四年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 5",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 4",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "1C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "1C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期五",
+            "sunny": "操一",
+            "rain": "2/F軒",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第一節 08:20–08:55",
+            "text": "P1數備(佩/趙/軒)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第四節 10:20–10:55",
+            "text": "P2人備(慧/杰/軒)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "佛教話劇隊(軒/杰)(禮堂)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "7",
+      "name": "符巧兒",
+      "code": "符",
+      "homeroom": "2A",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "2A",
+          "star": false
+        },
+        {
+          "subject": "常識",
+          "classes": "6B",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "1A 2A 3AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "2A",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "2A",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P1/2/3資",
+      "chairOf": [
+        "資"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "資・一年級",
+        "資・二年級",
+        "資・三年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 2",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 3",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 1",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "2A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "2A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "2A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "操二至洗手間",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第一節 08:20–08:55",
+            "text": "P2數備(符/碧/清)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第二節 08:55–09:30",
+            "text": "P6常備 (趙/符/瑩/蔚)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "女童軍(雯/符)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "8",
+      "name": "羅美儀",
+      "code": "羅",
+      "homeroom": "2B",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "2B 6C",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "5A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "6C",
+        "tue": "",
+        "wed": "",
+        "thu": "2B (0.5)",
+        "fri": "1"
+      },
+      "periods": "26",
+      "liaison": "P2中 / P5視",
+      "chairOf": [
+        "視"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "中・二年級",
+        "視・五年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 2",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "2B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "2B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "2B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "籃足間",
+            "rain": "3/F羅",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第四節 10:20–10:55",
+            "text": "P2中備(羅/蔚/穩)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第五節 10:55–11:30",
+            "text": "P6中備 (羅/李/俊/仁)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "視藝(低)(羅/筠)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "9",
+      "name": "劉可雯",
+      "code": "可",
+      "homeroom": "2C",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "2C 6(4)",
+          "star": false
+        },
+        {
+          "subject": "音樂",
+          "classes": "1A 3C 4AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1",
+        "wed": "0.5",
+        "thu": "2C (0.5)",
+        "fri": "1"
+      },
+      "periods": "29",
+      "liaison": "P1/3音",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "音・一年級",
+        "音・三年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 5",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 3",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 4",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "2C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "2C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "2C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "操一",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 4",
+            "period": "第二節 08:55–09:30",
+            "text": "P6英備 (可/尹/琪/談)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第七節 12:25–13:00",
+            "text": "P2英備(可/奕/雯)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "圖書(瑩/可)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "10",
+      "name": "何嘉玲",
+      "code": "何",
+      "homeroom": "3A",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "3A",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "5C",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "2AB 3A 6AD",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "5C",
+        "tue": "1",
+        "wed": "1.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "26",
+      "liaison": "P5人 / P6普",
+      "chairOf": [
+        "普"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "人文・五年級",
+        "普・六年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 2",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 3",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "3A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "3A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "3A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "操二至洗手間",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第三節 09:30–10:05",
+            "text": "P5人備 (何/瑤/談/仁)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第四節 10:20–10:55",
+            "text": "P3中備(何/李/杰)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "中文(高)(紅/何)"
+          },
+          {
+            "day": "星期四",
+            "text": "P5人文科(何瑤談仁)(杰) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "11",
+      "name": "李佩儀",
+      "code": "李",
+      "homeroom": "3B",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "3B 6B",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "3B 6B",
+          "star": false
+        },
+        {
+          "subject": "生命教育",
+          "classes": "3B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "",
+        "thu": "3B (0.5)",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "P3中",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "中・三年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 2",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 6",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "3B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "3B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "3B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "操二至洗手間",
+            "rain": "4/F李",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 3",
+            "period": "第四節 10:20–10:55",
+            "text": "P3中備(何/李/杰)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第五節 10:55–11:30",
+            "text": "P6中備 (羅/李/俊/仁)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "中文(低)(李/敏)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "12",
+      "name": "譚倩瑩",
+      "code": "倩",
+      "homeroom": "3C",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "3C *5A",
+          "star": true
+        },
+        {
+          "subject": "視藝",
+          "classes": "2AC",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "3C",
+        "tue": "",
+        "wed": "",
+        "thu": "3C",
+        "fri": "1"
+      },
+      "periods": "26",
+      "liaison": "P3英",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "英・三年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 4",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 3",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "3C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "3C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "3C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "籃足間",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第六節 11:50–12:25",
+            "text": "P5數備(儀/谷/偉) P3英備(倩/鄭)"
+          }
+        ],
+        "activities": []
+      }
+    },
+    {
+      "no": "13",
+      "name": "尹國雄",
+      "code": "尹",
+      "homeroom": "4A",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "*4A 6(1)",
+          "star": true
+        },
+        {
+          "subject": "體育",
+          "classes": "3AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "3B",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "4A (0.5)",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "P6英 / P3體",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "英・六年級",
+        "體・三年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 4",
+            "sunny": "足球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 6",
+            "sunny": "足球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "籃足球場之間",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "4A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "4A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "4A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "籃足間",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第二節 08:55–09:30",
+            "text": "P6英備 (可/尹/琪/談)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "英文話劇隊 (慧/尹/NET)(禮堂)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "14",
+      "name": "陳奕香",
+      "code": "奕",
+      "homeroom": "4B",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "2B 4B",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "2B",
+          "star": false
+        },
+        {
+          "subject": "生命教育",
+          "classes": "1A 2BC 4B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "2B",
+        "tue": "",
+        "wed": "1",
+        "thu": "4B (0.5)",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "P4英 / P2視",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "英・四年級",
+        "視・二年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 5",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 4",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 3",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "4B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "4B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "4B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "操一",
+            "rain": "4/F奕",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第七節 12:25–13:00",
+            "text": "P2英備(可/奕/雯)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "正能量(P1)(梅/趙/奕)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "15",
+      "name": "張智聰",
+      "code": "智",
+      "homeroom": "4C",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "4C",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "2B4C",
+          "star": false
+        },
+        {
+          "subject": "體育",
+          "classes": "2B 4C 5B",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "4C 5BD",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "P2科 / P4體",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "科學・二年級",
+        "體・四年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 4",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "足球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "4C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "4C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "4C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "足球場",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第四節 10:20–10:55",
+            "text": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第六節 11:50–12:25",
+            "text": "P4數備(智/穎/呂)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第七節 12:25–13:00",
+            "text": "P2科備(智/佩/燕)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "科學(燕/智)"
+          },
+          {
+            "day": "星期一",
+            "text": "P4科學科(燕/恒/智) (校外支援會議)"
+          },
+          {
+            "day": "星期四",
+            "text": "P4科學科(燕/恒/智) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "16",
+      "name": "楊麗茵",
+      "code": "茵",
+      "homeroom": "5A",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "*5A",
+          "star": true
+        },
+        {
+          "subject": "人文",
+          "classes": "1A",
+          "star": false
+        },
+        {
+          "subject": "音樂",
+          "classes": "1B+1C 2AC",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "2C 5A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1",
+        "wed": "0.5",
+        "thu": "5A",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P1人 / P2普",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "人文・一年級",
+        "普・二年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 6",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 2",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 3",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "5A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "5A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "5A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "操二至洗手間",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第五節 10:55–11:30",
+            "text": "P5中備 (茵/邵/紅/筠)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第五節 10:55–11:30",
+            "text": "P1人備(茵/邵/紅)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "新聞學人計劃(HK01計劃) (茵/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "17",
+      "name": "邵焯盈",
+      "code": "邵",
+      "homeroom": "5B",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "5B",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "1C",
+          "star": false
+        },
+        {
+          "subject": "音樂",
+          "classes": "4C 5BC 6BD",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "5B",
+        "tue": "",
+        "wed": "",
+        "thu": "5B (0.5)",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P4/5音",
+      "chairOf": [
+        "音"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "音・四年級",
+        "音・五年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 4",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "5B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "5B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "5B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "中式花園",
+            "rain": "5/F邵",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第五節 10:55–11:30",
+            "text": "P5中備 (茵/邵/紅/筠)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第五節 10:55–11:30",
+            "text": "P1人備(茵/邵/紅)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "合唱團(邵/外聘)"
+          },
+          {
+            "day": "星期一",
+            "text": "正能量(P1)(儀/邵/穎)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "18",
+      "name": "周妙紅",
+      "code": "紅",
+      "homeroom": "5C",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "5C",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "1B",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "1B+1C 5C 6C",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "1B",
+        "tue": "1",
+        "wed": "",
+        "thu": "5C",
+        "fri": "1"
+      },
+      "periods": "23",
+      "liaison": "P1/5普",
+      "chairOf": [
+        "中"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "普・一年級",
+        "普・五年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 3",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 2",
+            "sunny": "籃足球場之間",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "5C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "5C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "5C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "中式花園",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第五節 10:55–11:30",
+            "text": "P5中備 (茵/邵/紅/筠)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第五節 10:55–11:30",
+            "text": "P1人備(茵/邵/紅)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "中文(高)(紅/何)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "19",
+      "name": "麥珮筠",
+      "code": "筠",
+      "homeroom": "5D",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "5D",
+          "star": false
+        },
+        {
+          "subject": "常識",
+          "classes": "3C",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "1B+1C 3AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "5D",
+        "tue": "0.5",
+        "wed": "0.5",
+        "thu": "5D",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "P5中",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "中・五年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 6",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 4",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "5D",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "5D",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "5D",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期一",
+            "sunny": "操二至洗手間",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第四節 10:20–10:55",
+            "text": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第五節 10:55–11:30",
+            "text": "P5中備 (茵/邵/紅/筠)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "視藝(低)(羅/筠)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "20",
+      "name": "鄭永俊",
+      "code": "俊",
+      "homeroom": "6A",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "6A",
+          "star": false
+        },
+        {
+          "subject": "常識",
+          "classes": "3B",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "4C 5B6D",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "4C",
+        "tue": "1.5",
+        "wed": "",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P3常 / P4視",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "常・三年級",
+        "視・四年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 6",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 3",
+            "sunny": "籃足球場之間",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期三",
+            "class": "6A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "6A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "6A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第四節 10:20–10:55",
+            "text": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第五節 10:55–11:30",
+            "text": "P6中備 (羅/李/俊/仁)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "幼童軍(仁/俊)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "21",
+      "name": "吳綺琪",
+      "code": "琪",
+      "homeroom": "6B",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "1A 6(2)",
+          "star": false
+        },
+        {
+          "subject": "音樂",
+          "classes": "2B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "1",
+        "thu": "6B",
+        "fri": "1"
+      },
+      "periods": "25",
+      "liaison": "P2音",
+      "chairOf": [
+        "英"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "音・二年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 4",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 6",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "6B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "6B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "6B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "操一",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 4",
+            "period": "第二節 08:55–09:30",
+            "text": "P6英備 (可/尹/琪/談)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第六節 11:50–12:25",
+            "text": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "英文P6 (鄭/琪)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "22",
+      "name": "張寶儀",
+      "code": "儀",
+      "homeroom": "6C",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "*5A 6C",
+          "star": true
+        },
+        {
+          "subject": "科學",
+          "classes": "1C",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "4B 6BC",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "5A",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "6C",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "P1科 / P6資",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "科學・一年級",
+        "資・六年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 4",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 6",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "6C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期二",
+            "class": "6C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "6C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "足球場",
+            "rain": "6/F儀",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第五節 10:55–11:30",
+            "text": "P6數備 (儀/穎/燕/幗)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第六節 11:50–12:25",
+            "text": "P1科備(儀/碧/幗)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第六節 11:50–12:25",
+            "text": "P5數備(儀/谷/偉) P3英備(倩/鄭)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "正能量(P1)(儀/邵/穎)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "23",
+      "name": "陳穎盈",
+      "code": "穎",
+      "homeroom": "6D",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "*4A 6D",
+          "star": true
+        },
+        {
+          "subject": "體育",
+          "classes": "1A2C",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "4A",
+        "tue": "0.5",
+        "wed": "1.5",
+        "thu": "6D",
+        "fri": "1"
+      },
+      "periods": "22",
+      "liaison": "P1/2體",
+      "chairOf": [
+        "數"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "體・一年級",
+        "體・二年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 2",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 3",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "6D",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "6D",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "中式花園",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第五節 10:55–11:30",
+            "text": "P6數備 (儀/穎/燕/幗)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第六節 11:50–12:25",
+            "text": "P4數備(智/穎/呂)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "欖球校隊(1530－1730) (穎/外聘)(籃球場) (行政工作)"
+          },
+          {
+            "day": "星期三",
+            "text": "奧數(穎/外聘)(行政工作)"
+          },
+          {
+            "day": "星期一",
+            "text": "正能量(P1)(儀/邵/穎)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "24",
+      "name": "李慧敏",
+      "code": "慧",
+      "homeroom": "協2A",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "1B 5D",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "2A",
+          "star": false
+        },
+        {
+          "subject": "音樂",
+          "classes": "3AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "1",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P5英",
+      "chairOf": [],
+      "viceOf": [
+        "英"
+      ],
+      "gradeContact": [
+        "英・五年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 4",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 3",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 5",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "2A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "2A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期五",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F 慧",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第四節 10:20–10:55",
+            "text": "P2人備(慧/杰/軒)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第六節 11:50–12:25",
+            "text": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "英文話劇隊 (慧/尹/NET)(禮堂)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "25",
+      "name": "葉嘉碧",
+      "code": "碧",
+      "homeroom": "協2B",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "2C 3A",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "1A",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "2B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "3A",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "2B(1) 3A (0.5)",
+        "fri": "1"
+      },
+      "periods": "24",
+      "liaison": "P2數",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "數・二年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 6",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 2",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 4",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 5",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "2B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "2B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "中式花園",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第一節 08:20–08:55",
+            "text": "P2數備(符/碧/清)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第一節 08:20–08:55",
+            "text": "P3數備(佩/碧/趙)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第六節 11:50–12:25",
+            "text": "P1科備(儀/碧/幗)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "正能量(P1)(碧/幗/清)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "26",
+      "name": "李文華",
+      "code": "華",
+      "homeroom": "協2C",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "1C 4C",
+          "star": false
+        },
+        {
+          "subject": "常識",
+          "classes": "3A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "0.5",
+        "wed": "2C(1)3A (0.5)",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "27",
+      "liaison": "P1英",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "英・一年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 5",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 1",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 6",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "2C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "2C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "操一",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期一",
+            "sunny": "中式花園",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第四節 10:20–10:55",
+            "text": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+          },
+          {
+            "day": "DAY 3",
+            "period": "第六節 11:50–12:25",
+            "text": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)"
+          }
+        ],
+        "activities": []
+      }
+    },
+    {
+      "no": "27",
+      "name": "徐小燕",
+      "code": "燕",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "6B",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "2C *4A",
+          "star": true
+        },
+        {
+          "subject": "視藝",
+          "classes": "4AB",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "2C 4A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "24",
+      "liaison": "P4科 / P4資",
+      "chairOf": [
+        "常",
+        "科學"
+      ],
+      "viceOf": [],
+      "gradeContact": [
+        "科學・四年級",
+        "資・四年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 2",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 6",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 6",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 3",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "6B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "6B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第四節 10:20–10:55",
+            "text": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+          },
+          {
+            "day": "DAY 2",
+            "period": "第五節 10:55–11:30",
+            "text": "P6數備 (儀/穎/燕/幗)"
+          },
+          {
+            "day": "DAY 5",
+            "period": "第七節 12:25–13:00",
+            "text": "P2科備(智/佩/燕)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "科學(燕/智)"
+          },
+          {
+            "day": "星期一",
+            "text": "P4科學科(燕/恒/智) (校外支援會議)"
+          },
+          {
+            "day": "星期四",
+            "text": "P4科學科(燕/恒/智) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "28",
+      "name": "谷祖慧",
+      "code": "谷",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "5C 5D",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": ""
+      },
+      "periods": "12",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [],
+        "noon": [],
+        "prep": [
+          {
+            "day": "DAY 4",
+            "period": "第六節 11:50–12:25",
+            "text": "P5數備(儀/谷/偉) P3英備(倩/鄭)"
+          }
+        ],
+        "activities": []
+      }
+    },
+    {
+      "no": "29",
+      "name": "郭俊杰",
+      "code": "杰",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "3C",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "2B *4A",
+          "star": true
+        },
+        {
+          "subject": "生命教育",
+          "classes": "6AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "6B",
+        "tue": "",
+        "wed": "1.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "23",
+      "liaison": "P2人",
+      "chairOf": [
+        "人文"
+      ],
+      "viceOf": [
+        "常"
+      ],
+      "gradeContact": [
+        "人文・二年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 4",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 6",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 3",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 2",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "4A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "4A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期一",
+            "sunny": "籃足間",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 3",
+            "period": "第四節 10:20–10:55",
+            "text": "P3中備(何/李/杰)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第四節 10:20–10:55",
+            "text": "P2人備(慧/杰/軒)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "佛教話劇隊(軒/杰)(禮堂)"
+          },
+          {
+            "day": "星期四",
+            "text": "P5人文科(何瑤談仁)(杰) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "30",
+      "name": "劉嘉雯",
+      "code": "雯",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "2A 5C",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "3C",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "0.5",
+        "wed": "1",
+        "thu": "5B (1) 3A (0.5)",
+        "fri": "1"
+      },
+      "periods": "24",
+      "liaison": "P2英 / P3視",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "英・二年級",
+        "視・三年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 3",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 4",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 6",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "5C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "5C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期五",
+            "sunny": "籃球場",
+            "rain": "5/F雯",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第七節 12:25–13:00",
+            "text": "P2英備(可/奕/雯)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "女童軍(雯/符)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "31",
+      "name": "鄭寶兒",
+      "code": "鄭",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "3A 3B 5B",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "28",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 6",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 3",
+            "place": "3/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "3A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "3A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "中式花園",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 1",
+            "period": "第二節 08:55–09:30",
+            "text": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第六節 11:50–12:25",
+            "text": "P5數備(儀/谷/偉) P3英備(倩/鄭)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "英文P6 (鄭/琪)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "32",
+      "name": "李倩瑩",
+      "code": "瑩",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "常識",
+          "classes": "6A",
+          "star": false
+        },
+        {
+          "subject": "音樂",
+          "classes": "5AD 6AC",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "1A 3C 4AC",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "6A",
+        "tue": "1",
+        "wed": "",
+        "thu": "1.5",
+        "fri": "1"
+      },
+      "periods": "24",
+      "liaison": "P3普 / P6音",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "音・六年級",
+        "普・三年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "3C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "3C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [],
+        "prep": [
+          {
+            "day": "DAY 3",
+            "period": "第二節 08:55–09:30",
+            "text": "P6常備 (趙/符/瑩/蔚)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "圖書(瑩/可)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "33",
+      "name": "王蔚婷",
+      "code": "蔚",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "2C",
+          "star": false
+        },
+        {
+          "subject": "常識",
+          "classes": "6C",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "5B",
+          "star": false
+        },
+        {
+          "subject": "生命教育",
+          "classes": "1B+1C 2A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "0.5",
+        "thu": "1.5",
+        "fri": "1"
+      },
+      "periods": "22",
+      "liaison": "P6常",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "常・六年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 6",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 1",
+            "sunny": "操二至洗手間",
+            "rain": "2/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 4",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期三",
+            "class": "6C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "6C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期一",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期四",
+            "sunny": "中式花園",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期一",
+            "sunny": "操一",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 3",
+            "period": "第二節 08:55–09:30",
+            "text": "P6常備 (趙/符/瑩/蔚)"
+          },
+          {
+            "day": "DAY 2",
+            "period": "第四節 10:20–10:55",
+            "text": "P2中備(羅/蔚/穩)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "新聞學人計劃(HK01計劃) (茵/蔚)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "34",
+      "name": "楊幗萍",
+      "code": "幗",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "6A",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "1B",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "5CD 6AB",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "0.5",
+        "wed": "",
+        "thu": "6A",
+        "fri": "1"
+      },
+      "periods": "20",
+      "liaison": "P6數",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "數・六年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 3",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 5",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          },
+          {
+            "day": "DAY 6",
+            "place": "6/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 5",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "6A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期二",
+            "class": "6A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "操一",
+            "rain": "2/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第五節 10:55–11:30",
+            "text": "P6數備 (儀/穎/燕/幗)"
+          },
+          {
+            "day": "DAY 1",
+            "period": "第六節 11:50–12:25",
+            "text": "P1科備(儀/碧/幗)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "正能量(P1)(碧/幗/清)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "35",
+      "name": "談嘉豪",
+      "code": "談",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "6(3)",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "*5A",
+          "star": true
+        }
+      ],
+      "pm": {
+        "mon": "1.5",
+        "tue": "",
+        "wed": "1.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "16",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 3",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 3",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 5",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 6",
+            "sunny": "籃足球場之間",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "5A",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "5A",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期五",
+            "sunny": "中式花園",
+            "rain": "3/F談",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期一",
+            "sunny": "足球場",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 4",
+            "period": "第二節 08:55–09:30",
+            "text": "P6英備 (可/尹/琪/談)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第三節 09:30–10:05",
+            "text": "P5人備 (何/瑤/談/仁)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "STEM(恒/談)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          },
+          {
+            "day": "星期四",
+            "text": "P5人文科(何瑤談仁)(杰) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "36",
+      "name": "麥穩",
+      "code": "穩",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "2A",
+          "star": false
+        },
+        {
+          "subject": "視藝",
+          "classes": "6C",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1",
+        "wed": "",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "14",
+      "liaison": "P6視",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "視・六年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "2/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 4",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 4",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 5",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 6",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "5D",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期四",
+            "class": "5D",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "中式花園",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第四節 10:20–10:55",
+            "text": "P2中備(羅/蔚/穩)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "37",
+      "name": "陳輔仁",
+      "code": "仁",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "6D",
+          "star": false
+        },
+        {
+          "subject": "人文",
+          "classes": "5D",
+          "star": false
+        },
+        {
+          "subject": "生命教育",
+          "classes": "5D 6D",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "6D",
+        "tue": "1.5",
+        "wed": "",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "20",
+      "liaison": "P6中",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "中・六年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 1",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 2",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 4",
+            "sunny": "籃足球場之間",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "6D",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "6D",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "籃足間",
+            "rain": "3/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期一",
+            "sunny": "中式花園",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第三節 09:30–10:05",
+            "text": "P5人備 (何/瑤/談/仁)"
+          },
+          {
+            "day": "DAY 4",
+            "period": "第五節 10:55–11:30",
+            "text": "P6中備 (羅/李/俊/仁)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期二",
+            "text": "國旗隊(仁/外聘) (行政工作)"
+          },
+          {
+            "day": "星期四",
+            "text": "佛化藝術教育活動(行政工作) (宗教組)(仁統籌)"
+          },
+          {
+            "day": "星期三",
+            "text": "幼童軍(仁/俊)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          },
+          {
+            "day": "星期四",
+            "text": "P5人文科(何瑤談仁)(杰) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "38",
+      "name": "連偉恒",
+      "code": "偉",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "5B",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "5C",
+          "star": false
+        },
+        {
+          "subject": "體育",
+          "classes": "5CD 6BD",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "1",
+        "thu": "4A(1)",
+        "fri": "1"
+      },
+      "periods": "20",
+      "liaison": "P5數 / P5體",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "數・五年級",
+        "體・五年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "5/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 6",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 3",
+            "sunny": "足球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "5B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "5B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期四",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期四",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期二",
+            "sunny": "足球場",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 4",
+            "period": "第六節 11:50–12:25",
+            "text": "P5數備(儀/谷/偉) P3英備(倩/鄭)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期一",
+            "text": "籃球校隊(1530－1730) (偉/外聘)(籃球場) (行政工作)"
+          },
+          {
+            "day": "星期四",
+            "text": "游泳校隊至1730) (偉/外聘)(泳池)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "39",
+      "name": "張定恒",
+      "code": "恒",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "科學",
+          "classes": "4B *5A",
+          "star": true
+        },
+        {
+          "subject": "體育",
+          "classes": "5A",
+          "star": false
+        },
+        {
+          "subject": "資訊科技",
+          "classes": "5AC 6AD",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "1.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "20",
+      "liaison": "P5科 / P5資",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "科學・五年級",
+        "資・五年級"
+      ],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 2",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 1",
+            "sunny": "中式花園",
+            "rain": "4/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 2",
+            "sunny": "足球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 5",
+            "sunny": "籃足球場之間",
+            "rain": "6/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "4C",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期三",
+            "class": "4C",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期一",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期四",
+            "sunny": "足球場",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 6",
+            "period": "第四節 10:20–10:55",
+            "text": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "STEM(恒/談)"
+          },
+          {
+            "day": "星期一",
+            "text": "P4科學科(燕/恒/智) (校外支援會議)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          },
+          {
+            "day": "星期四",
+            "text": "P4科學科(燕/恒/智) (校外支援會議)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "40",
+      "name": "呂亮賢",
+      "code": "呂",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "4B",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "5B",
+          "star": false
+        },
+        {
+          "subject": "體育",
+          "classes": "4B 6AC",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "0.5",
+        "thu": "",
+        "fri": "1"
+      },
+      "periods": "18",
+      "liaison": "P4數 / P6體",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [
+        "數・四年級",
+        "體・六年級"
+      ],
+      "duties": {
+        "recess1": [
+          {
+            "day": "DAY 1",
+            "place": "4/F",
+            "time": "10:05–10:20 小息一（樓層／玩具趣趣）"
+          }
+        ],
+        "recess2": [
+          {
+            "day": "DAY 6",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 6",
+            "sunny": "操一",
+            "rain": "3/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期一",
+            "class": "4B",
+            "time": "13:00–13:40 午膳"
+          },
+          {
+            "day": "星期五",
+            "class": "4B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期二",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期二",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期三",
+            "sunny": "籃球場",
+            "rain": "5/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 5",
+            "period": "第六節 11:50–12:25",
+            "text": "P4數備(智/穎/呂)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "足球校隊(1530－1730) (呂/外聘)(籃球場) (行政工作)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "41",
+      "name": "林清雲",
+      "code": "清",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "數學",
+          "classes": "2B",
+          "star": false
+        },
+        {
+          "subject": "科學",
+          "classes": "5D",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "1.5",
+        "wed": "1",
+        "thu": "4C",
+        "fri": "1"
+      },
+      "periods": "14",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [],
+        "recess2": [
+          {
+            "day": "DAY 5",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          },
+          {
+            "day": "DAY 5",
+            "sunny": "足球場",
+            "rain": "5/F",
+            "time": "11:30–11:50 小息二（晴天操場／雨天樓層）"
+          }
+        ],
+        "lunch": [
+          {
+            "day": "星期二",
+            "class": "3B",
+            "time": "13:00–13:40 午膳"
+          }
+        ],
+        "noon": [
+          {
+            "day": "星期三",
+            "sunny": "持咪",
+            "rain": "-",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期三",
+            "sunny": "操一",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期四",
+            "sunny": "操一",
+            "rain": "4/F",
+            "time": "13:40–14:00 午息"
+          },
+          {
+            "day": "星期一",
+            "sunny": "詢問處至英語角",
+            "rain": "6/F",
+            "time": "13:40–14:00 午息"
+          }
+        ],
+        "prep": [
+          {
+            "day": "DAY 2",
+            "period": "第一節 08:20–08:55",
+            "text": "P2數備(符/碧/清)"
+          },
+          {
+            "day": "DAY 6",
+            "period": "第六節 11:50–12:25",
+            "text": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+          }
+        ],
+        "activities": [
+          {
+            "day": "星期四",
+            "text": "正能量(P1)(碧/幗/清)"
+          },
+          {
+            "day": "星期二",
+            "text": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "42",
+      "name": "林冬",
+      "code": "冬",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "中文",
+          "classes": "4B",
+          "star": false
+        },
+        {
+          "subject": "普通話",
+          "classes": "5D",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": ""
+      },
+      "periods": "12",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [],
+        "recess2": [],
+        "lunch": [],
+        "noon": [],
+        "prep": [
+          {
+            "day": "DAY 3",
+            "period": "第六節 11:50–12:25",
+            "text": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)"
+          }
+        ],
+        "activities": []
+      }
+    },
+    {
+      "no": "43",
+      "name": "王佩斯",
+      "code": "王",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "體育",
+          "classes": "3C 4A",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": ""
+      },
+      "periods": "4",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [],
+        "recess2": [],
+        "lunch": [],
+        "noon": [],
+        "prep": [],
+        "activities": [
+          {
+            "day": "星期三",
+            "text": "國術隊(王)(禮堂)"
+          }
+        ]
+      }
+    },
+    {
+      "no": "44",
+      "name": "SEAMAN",
+      "code": "",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "英文",
+          "classes": "P1/6",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": ""
+      },
+      "periods": "",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [],
+        "recess2": [],
+        "lunch": [],
+        "noon": [],
+        "prep": [],
+        "activities": []
+      }
+    },
+    {
+      "no": "45",
+      "name": "吳潔珠",
+      "code": "潔",
+      "homeroom": "",
+      "subjects": [
+        {
+          "subject": "生命教育",
+          "classes": "協助",
+          "star": false
+        }
+      ],
+      "pm": {
+        "mon": "",
+        "tue": "",
+        "wed": "",
+        "thu": "",
+        "fri": ""
+      },
+      "periods": "",
+      "liaison": "",
+      "chairOf": [],
+      "viceOf": [],
+      "gradeContact": [],
+      "duties": {
+        "recess1": [],
+        "recess2": [],
+        "lunch": [],
+        "noon": [],
+        "prep": [],
+        "activities": []
+      }
+    }
+  ],
+  "classes": [
+    {
+      "class": "1A",
+      "teachers": {
+        "班主任": "敏/佩",
+        "中文": "敏",
+        "英文": "琪",
+        "數學": "佩",
+        "常識": "",
+        "人文": "茵",
+        "科學": "碧",
+        "音樂": "可",
+        "體育": "穎",
+        "視藝": "敏",
+        "普通話": "瑩",
+        "資訊科技": "符",
+        "生命教育": "奕"
+      }
+    },
+    {
+      "class": "1B",
+      "teachers": {
+        "班主任": "梅/趙",
+        "中文": "梅",
+        "英文": "慧",
+        "數學": "趙",
+        "常識": "",
+        "人文": "紅",
+        "科學": "幗",
+        "音樂": "茵",
+        "體育": "佩",
+        "視藝": "筠",
+        "普通話": "紅",
+        "資訊科技": "趙",
+        "生命教育": "蔚"
+      }
+    },
+    {
+      "class": "1C",
+      "teachers": {
+        "班主任": "瑤/軒",
+        "中文": "瑤",
+        "英文": "華",
+        "數學": "軒",
+        "常識": "",
+        "人文": "邵",
+        "科學": "儀",
+        "音樂": "茵",
+        "體育": "佩",
+        "視藝": "筠",
+        "普通話": "紅",
+        "資訊科技": "趙",
+        "生命教育": "蔚"
+      }
+    },
+    {
+      "class": "2A",
+      "teachers": {
+        "班主任": "符",
+        "中文": "穩",
+        "英文": "雯",
+        "數學": "符",
+        "常識": "",
+        "人文": "慧",
+        "科學": "佩",
+        "音樂": "茵",
+        "體育": "佩",
+        "視藝": "倩",
+        "普通話": "何",
+        "資訊科技": "符",
+        "生命教育": "蔚"
+      }
+    },
+    {
+      "class": "2B",
+      "teachers": {
+        "班主任": "羅",
+        "中文": "羅",
+        "英文": "奕",
+        "數學": "清",
+        "常識": "",
+        "人文": "杰",
+        "科學": "智",
+        "音樂": "琪",
+        "體育": "智",
+        "視藝": "奕",
+        "普通話": "何",
+        "資訊科技": "碧",
+        "生命教育": "奕"
+      }
+    },
+    {
+      "class": "2C",
+      "teachers": {
+        "班主任": "可",
+        "中文": "蔚",
+        "英文": "可",
+        "數學": "碧",
+        "常識": "",
+        "人文": "軒",
+        "科學": "燕",
+        "音樂": "茵",
+        "體育": "穎",
+        "視藝": "倩",
+        "普通話": "茵",
+        "資訊科技": "燕",
+        "生命教育": "奕"
+      }
+    },
+    {
+      "class": "3A",
+      "teachers": {
+        "班主任": "何",
+        "中文": "何",
+        "英文": "鄭",
+        "數學": "碧",
+        "常識": "華",
+        "人文": "",
+        "科學": "",
+        "音樂": "慧",
+        "體育": "尹",
+        "視藝": "筠",
+        "普通話": "何",
+        "資訊科技": "符",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "3B",
+      "teachers": {
+        "班主任": "李",
+        "中文": "李",
+        "英文": "鄭",
+        "數學": "佩",
+        "常識": "俊",
+        "人文": "",
+        "科學": "",
+        "音樂": "慧",
+        "體育": "尹",
+        "視藝": "筠",
+        "普通話": "李",
+        "資訊科技": "符",
+        "生命教育": "李"
+      }
+    },
+    {
+      "class": "3C",
+      "teachers": {
+        "班主任": "倩",
+        "中文": "杰",
+        "英文": "倩",
+        "數學": "趙",
+        "常識": "筠",
+        "人文": "",
+        "科學": "",
+        "音樂": "可",
+        "體育": "王",
+        "視藝": "雯",
+        "普通話": "瑩",
+        "資訊科技": "趙",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "4A",
+      "teachers": {
+        "班主任": "尹",
+        "中文": "敏",
+        "英文": "尹",
+        "數學": "穎",
+        "常識": "",
+        "人文": "杰",
+        "科學": "燕",
+        "音樂": "可",
+        "體育": "王",
+        "視藝": "燕",
+        "普通話": "瑩",
+        "資訊科技": "燕",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "4B",
+      "teachers": {
+        "班主任": "奕",
+        "中文": "冬",
+        "英文": "奕",
+        "數學": "呂",
+        "常識": "",
+        "人文": "梅",
+        "科學": "恒",
+        "音樂": "可",
+        "體育": "呂",
+        "視藝": "燕",
+        "普通話": "梅",
+        "資訊科技": "儀",
+        "生命教育": "奕"
+      }
+    },
+    {
+      "class": "4C",
+      "teachers": {
+        "班主任": "智",
+        "中文": "瑤",
+        "英文": "華",
+        "數學": "智",
+        "常識": "",
+        "人文": "軒",
+        "科學": "智",
+        "音樂": "邵",
+        "體育": "智",
+        "視藝": "俊",
+        "普通話": "瑩",
+        "資訊科技": "智",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "5A",
+      "teachers": {
+        "班主任": "茵",
+        "中文": "茵",
+        "英文": "倩",
+        "數學": "儀",
+        "常識": "",
+        "人文": "談",
+        "科學": "恒",
+        "音樂": "瑩",
+        "體育": "恒",
+        "視藝": "羅",
+        "普通話": "茵",
+        "資訊科技": "恒",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "5B",
+      "teachers": {
+        "班主任": "邵",
+        "中文": "邵",
+        "英文": "鄭",
+        "數學": "偉",
+        "常識": "",
+        "人文": "瑤",
+        "科學": "呂",
+        "音樂": "邵",
+        "體育": "智",
+        "視藝": "俊",
+        "普通話": "蔚",
+        "資訊科技": "智",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "5C",
+      "teachers": {
+        "班主任": "紅",
+        "中文": "紅",
+        "英文": "雯",
+        "數學": "谷",
+        "常識": "",
+        "人文": "何",
+        "科學": "偉",
+        "音樂": "邵",
+        "體育": "偉",
+        "視藝": "幗",
+        "普通話": "紅",
+        "資訊科技": "恒",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "5D",
+      "teachers": {
+        "班主任": "筠",
+        "中文": "筠",
+        "英文": "慧",
+        "數學": "谷",
+        "常識": "",
+        "人文": "仁",
+        "科學": "清",
+        "音樂": "瑩",
+        "體育": "偉",
+        "視藝": "幗",
+        "普通話": "冬",
+        "資訊科技": "智",
+        "生命教育": "仁"
+      }
+    },
+    {
+      "class": "6A",
+      "teachers": {
+        "班主任": "俊",
+        "中文": "俊",
+        "英文": "6(1)尹",
+        "數學": "幗",
+        "常識": "瑩",
+        "人文": "",
+        "科學": "",
+        "音樂": "瑩",
+        "體育": "呂",
+        "視藝": "幗",
+        "普通話": "何",
+        "資訊科技": "恒",
+        "生命教育": "杰"
+      }
+    },
+    {
+      "class": "6B",
+      "teachers": {
+        "班主任": "琪",
+        "中文": "李",
+        "英文": "6(2)琪",
+        "數學": "燕",
+        "常識": "符",
+        "人文": "",
+        "科學": "",
+        "音樂": "邵",
+        "體育": "偉",
+        "視藝": "幗",
+        "普通話": "李",
+        "資訊科技": "儀",
+        "生命教育": "杰"
+      }
+    },
+    {
+      "class": "6C",
+      "teachers": {
+        "班主任": "儀",
+        "中文": "羅",
+        "英文": "6(3)談",
+        "數學": "儀",
+        "常識": "蔚",
+        "人文": "",
+        "科學": "",
+        "音樂": "瑩",
+        "體育": "呂",
+        "視藝": "穩",
+        "普通話": "紅",
+        "資訊科技": "儀",
+        "生命教育": "軒"
+      }
+    },
+    {
+      "class": "6D",
+      "teachers": {
+        "班主任": "穎",
+        "中文": "仁",
+        "英文": "6(4)可",
+        "數學": "穎",
+        "常識": "趙",
+        "人文": "",
+        "科學": "",
+        "音樂": "邵",
+        "體育": "偉",
+        "視藝": "俊",
+        "普通話": "何",
+        "資訊科技": "恒",
+        "生命教育": "仁"
+      }
+    }
+  ],
+  "gradeTeachers": {
+    "P.1": {
+      "中": "敏/梅/瑤",
+      "英": "華/琪/慧",
+      "數": "趙/佩/軒",
+      "人文": "茵/紅/邵",
+      "科學": "儀/碧/幗",
+      "音": "可/茵",
+      "體": "穎/佩",
+      "視": "敏/筠",
+      "普": "紅/瑩",
+      "資": "符/趙"
+    },
+    "P.2": {
+      "中": "羅/穩/蔚",
+      "英": "雯/可/奕",
+      "數": "碧/符/清",
+      "人文": "杰/慧/軒",
+      "科學": "智/佩/燕",
+      "音": "琪/茵",
+      "體": "穎/佩/智",
+      "視": "奕/倩",
+      "普": "茵/何",
+      "資": "符/碧/燕"
+    },
+    "P.3": {
+      "中": "李/何/杰",
+      "英": "倩/鄭",
+      "數": "佩/碧/趙",
+      "常": "俊/華/筠",
+      "音": "可/慧",
+      "體": "尹/王",
+      "視": "雯/筠",
+      "普": "瑩/何/李",
+      "資": "符/趙"
+    },
+    "P.4": {
+      "中": "瑤/敏/冬",
+      "英": "奕/尹/華",
+      "數": "呂/穎/智",
+      "人文": "軒/杰/梅",
+      "科學": "燕/恒/智",
+      "音": "邵/可",
+      "體": "智/王/呂",
+      "視": "俊/燕",
+      "普": "梅/瑩",
+      "資": "燕/儀/智"
+    },
+    "P.5": {
+      "中": "筠/邵/紅/茵",
+      "英": "慧/倩/鄭/雯",
+      "數": "偉/儀/谷",
+      "人文": "何/談/瑤/仁",
+      "科學": "恒/呂/偉/清",
+      "音": "邵/瑩",
+      "體": "偉/恒/智",
+      "視": "羅/俊/幗",
+      "普": "紅/茵/蔚/冬",
+      "資": "恒/智"
+    },
+    "P.6": {
+      "中": "仁/俊/李/羅",
+      "英": "尹/琪/談/可",
+      "數": "幗/燕/儀/穎",
+      "常": "蔚/符/瑩/趙",
+      "音": "瑩/邵",
+      "體": "呂/偉",
+      "視": "穩/幗/俊",
+      "普": "何/李/紅",
+      "資": "儀/恒"
+    }
+  },
+  "subjectTeams": [
+    {
+      "subject": "中文科",
+      "teachers": "敏/梅/瑤/羅/何/李/茵/邵/紅/筠/俊/杰/蔚/穩/仁/冬",
+      "count": "16人"
+    },
+    {
+      "subject": "英文科",
+      "teachers": "可/倩/尹/奕/琪/慧/華/雯/鄭/談",
+      "count": "10人"
+    },
+    {
+      "subject": "數學科",
+      "teachers": "佩/趙/軒/符/智/儀/穎/碧/燕/谷/幗/偉/呂/清",
+      "count": "14人"
+    },
+    {
+      "subject": "常識科",
+      "teachers": "趙/符/筠/俊/華/瑩/蔚",
+      "count": "7人"
+    },
+    {
+      "subject": "人文科",
+      "teachers": "梅/瑤/軒/何/茵/邵/紅/慧/杰/談/仁",
+      "count": "11人"
+    },
+    {
+      "subject": "科學科",
+      "teachers": "佩/智/儀/碧/燕/幗/偉/恒/呂/清",
+      "count": "10人"
+    },
+    {
+      "subject": "音樂科",
+      "teachers": "可/茵/邵/琪/慧/瑩",
+      "count": "6人"
+    },
+    {
+      "subject": "體育科",
+      "teachers": "佩/尹/智/穎/偉/恒/呂/王",
+      "count": "8人"
+    },
+    {
+      "subject": "視藝科",
+      "teachers": "敏/羅/倩/奕/筠/俊/燕/雯/幗/穩",
+      "count": "10人"
+    },
+    {
+      "subject": "普通話科",
+      "teachers": "梅/何/李/茵/紅/瑩/蔚",
+      "count": "7人"
+    },
+    {
+      "subject": "資訊科技科",
+      "teachers": "趙/符/智/儀/碧/燕/恒",
+      "count": "7人"
+    },
+    {
+      "subject": "生命教育",
+      "teachers": "軒/李/奕/杰/蔚/仁",
+      "count": "6人"
+    }
+  ],
+  "subjectRoles": [
+    {
+      "subject": "中",
+      "chair": "紅",
+      "vice": "敏",
+      "liaison": {
+        "一年級": "敏",
+        "二年級": "羅",
+        "三年級": "李",
+        "四年級": "瑤",
+        "五年級": "筠",
+        "六年級": "仁"
+      }
+    },
+    {
+      "subject": "英",
+      "chair": "琪",
+      "vice": "慧",
+      "liaison": {
+        "一年級": "華",
+        "二年級": "雯",
+        "三年級": "倩",
+        "四年級": "奕",
+        "五年級": "慧",
+        "六年級": "尹"
+      }
+    },
+    {
+      "subject": "數",
+      "chair": "穎",
+      "vice": "趙",
+      "liaison": {
+        "一年級": "趙",
+        "二年級": "碧",
+        "三年級": "佩",
+        "四年級": "呂",
+        "五年級": "偉",
+        "六年級": "幗"
+      }
+    },
+    {
+      "subject": "常",
+      "chair": "燕",
+      "vice": "杰",
+      "liaison": {
+        "一年級": "",
+        "二年級": "",
+        "三年級": "俊",
+        "四年級": "",
+        "五年級": "",
+        "六年級": "蔚"
+      }
+    },
+    {
+      "subject": "科學",
+      "chair": "燕",
+      "vice": "",
+      "liaison": {
+        "一年級": "儀",
+        "二年級": "智",
+        "三年級": "",
+        "四年級": "燕",
+        "五年級": "恒",
+        "六年級": ""
+      }
+    },
+    {
+      "subject": "人文",
+      "chair": "杰",
+      "vice": "",
+      "liaison": {
+        "一年級": "茵",
+        "二年級": "杰",
+        "三年級": "",
+        "四年級": "軒",
+        "五年級": "何",
+        "六年級": ""
+      }
+    },
+    {
+      "subject": "音",
+      "chair": "邵",
+      "vice": "",
+      "liaison": {
+        "一年級": "可",
+        "二年級": "琪",
+        "三年級": "可",
+        "四年級": "邵",
+        "五年級": "邵",
+        "六年級": "瑩"
+      }
+    },
+    {
+      "subject": "體",
+      "chair": "佩",
+      "vice": "",
+      "liaison": {
+        "一年級": "穎",
+        "二年級": "穎",
+        "三年級": "尹",
+        "四年級": "智",
+        "五年級": "偉",
+        "六年級": "呂"
+      }
+    },
+    {
+      "subject": "視",
+      "chair": "羅",
+      "vice": "",
+      "liaison": {
+        "一年級": "敏",
+        "二年級": "奕",
+        "三年級": "雯",
+        "四年級": "俊",
+        "五年級": "羅",
+        "六年級": "穩"
+      }
+    },
+    {
+      "subject": "普",
+      "chair": "何",
+      "vice": "",
+      "liaison": {
+        "一年級": "紅",
+        "二年級": "茵",
+        "三年級": "瑩",
+        "四年級": "梅",
+        "五年級": "紅",
+        "六年級": "何"
+      }
+    },
+    {
+      "subject": "資",
+      "chair": "符",
+      "vice": "",
+      "liaison": {
+        "一年級": "符",
+        "二年級": "符",
+        "三年級": "符",
+        "四年級": "燕",
+        "五年級": "恒",
+        "六年級": "儀"
+      }
+    }
+  ],
+  "recess1": [
+    {
+      "floor": "6/F",
+      "days": {
+        "DAY 1": "何",
+        "DAY 2": "燕",
+        "DAY 3": "幗",
+        "DAY 4": "琪",
+        "DAY 5": "可",
+        "DAY 6": "琪"
+      }
+    },
+    {
+      "floor": "6/F",
+      "days": {
+        "DAY 1": "李",
+        "DAY 2": "李",
+        "DAY 3": "可",
+        "DAY 4": "可",
+        "DAY 5": "幗",
+        "DAY 6": "幗"
+      }
+    },
+    {
+      "floor": "5/F",
+      "days": {
+        "DAY 1": "偉",
+        "DAY 2": "瑤",
+        "DAY 3": "雯",
+        "DAY 4": "慧",
+        "DAY 5": "瑤",
+        "DAY 6": "鄭"
+      }
+    },
+    {
+      "floor": "5/F",
+      "days": {
+        "DAY 1": "谷",
+        "DAY 2": "何",
+        "DAY 3": "慧",
+        "DAY 4": "倩",
+        "DAY 5": "谷",
+        "DAY 6": "筠"
+      }
+    },
+    {
+      "floor": "4/F",
+      "days": {
+        "DAY 1": "智",
+        "DAY 2": "敏",
+        "DAY 3": "倩",
+        "DAY 4": "杰",
+        "DAY 5": "華",
+        "DAY 6": "李"
+      }
+    },
+    {
+      "floor": "4/F",
+      "days": {
+        "DAY 1": "呂",
+        "DAY 2": "穎",
+        "DAY 3": "穎",
+        "DAY 4": "筠",
+        "DAY 5": "鄭",
+        "DAY 6": "杰"
+      }
+    },
+    {
+      "floor": "3/F",
+      "days": {
+        "DAY 1": "羅",
+        "DAY 2": "符",
+        "DAY 3": "符",
+        "DAY 4": "雯",
+        "DAY 5": "敏",
+        "DAY 6": "碧"
+      }
+    },
+    {
+      "floor": "3/F",
+      "days": {
+        "DAY 1": "邵",
+        "DAY 2": "碧",
+        "DAY 3": "鄭",
+        "DAY 4": "邵",
+        "DAY 5": "邵",
+        "DAY 6": "燕"
+      }
+    },
+    {
+      "floor": "2/F",
+      "days": {
+        "DAY 1": "穩",
+        "DAY 2": "羅",
+        "DAY 3": "梅",
+        "DAY 4": "佩",
+        "DAY 5": "梅",
+        "DAY 6": "茵"
+      }
+    },
+    {
+      "floor": "2/F",
+      "days": {
+        "DAY 1": "瑤",
+        "DAY 2": "茵",
+        "DAY 3": "趙",
+        "DAY 4": "趙",
+        "DAY 5": "羅",
+        "DAY 6": "蔚"
+      }
+    }
+  ],
+  "recess2": [
+    {
+      "sunny": "持咪",
+      "rain": "-",
+      "days": {
+        "DAY 1": "仁",
+        "DAY 2": "恒",
+        "DAY 3": "談",
+        "DAY 4": "穩",
+        "DAY 5": "清",
+        "DAY 6": "呂"
+      }
+    },
+    {
+      "sunny": "操二至洗手間",
+      "rain": "2/F",
+      "days": {
+        "DAY 1": "蔚",
+        "DAY 2": "趙",
+        "DAY 3": "茵",
+        "DAY 4": "碧",
+        "DAY 5": "奕",
+        "DAY 6": "燕"
+      }
+    },
+    {
+      "sunny": "操二至洗手間",
+      "rain": "2/F",
+      "days": {
+        "DAY 1": "華",
+        "DAY 2": "儀",
+        "DAY 3": "紅",
+        "DAY 4": "奕",
+        "DAY 5": "碧",
+        "DAY 6": "華"
+      }
+    },
+    {
+      "sunny": "操一",
+      "rain": "3/F",
+      "days": {
+        "DAY 1": "仁",
+        "DAY 2": "筠",
+        "DAY 3": "佩",
+        "DAY 4": "穩",
+        "DAY 5": "軒",
+        "DAY 6": "呂"
+      }
+    },
+    {
+      "sunny": "操一",
+      "rain": "3/F",
+      "days": {
+        "DAY 1": "紅",
+        "DAY 2": "仁",
+        "DAY 3": "杰",
+        "DAY 4": "蔚",
+        "DAY 5": "穩",
+        "DAY 6": "穩"
+      }
+    },
+    {
+      "sunny": "中式花園",
+      "rain": "4/F",
+      "days": {
+        "DAY 1": "符",
+        "DAY 2": "倩",
+        "DAY 3": "奕",
+        "DAY 4": "敏",
+        "DAY 5": "幗",
+        "DAY 6": "俊"
+      }
+    },
+    {
+      "sunny": "中式花園",
+      "rain": "4/F",
+      "days": {
+        "DAY 1": "恒",
+        "DAY 2": "杰",
+        "DAY 3": "何",
+        "DAY 4": "儀",
+        "DAY 5": "佩",
+        "DAY 6": "儀"
+      }
+    },
+    {
+      "sunny": "籃球場",
+      "rain": "5/F",
+      "days": {
+        "DAY 1": "佩",
+        "DAY 2": "穎",
+        "DAY 3": "談",
+        "DAY 4": "智",
+        "DAY 5": "談",
+        "DAY 6": "偉"
+      }
+    },
+    {
+      "sunny": "足球場",
+      "rain": "5/F",
+      "days": {
+        "DAY 1": "智",
+        "DAY 2": "恒",
+        "DAY 3": "偉",
+        "DAY 4": "尹",
+        "DAY 5": "清",
+        "DAY 6": "尹"
+      }
+    },
+    {
+      "sunny": "籃足球場之間",
+      "rain": "6/F",
+      "days": {
+        "DAY 1": "尹",
+        "DAY 2": "紅",
+        "DAY 3": "俊",
+        "DAY 4": "仁",
+        "DAY 5": "恒",
+        "DAY 6": "談"
+      }
+    },
+    {
+      "sunny": "詢問處至英語角",
+      "rain": "6/F",
+      "days": {
+        "DAY 1": "俊",
+        "DAY 2": "琪",
+        "DAY 3": "燕",
+        "DAY 4": "軒",
+        "DAY 5": "慧",
+        "DAY 6": "雯"
+      }
+    }
+  ],
+  "lunch": [
+    {
+      "class": "1A",
+      "days": {
+        "星期一": "佩",
+        "星期二": "敏",
+        "星期三": "敏",
+        "星期四": "佩",
+        "星期五": "敏"
+      }
+    },
+    {
+      "class": "1B",
+      "days": {
+        "星期一": "梅",
+        "星期二": "梅",
+        "星期三": "趙",
+        "星期四": "梅",
+        "星期五": "趙"
+      }
+    },
+    {
+      "class": "1C",
+      "days": {
+        "星期一": "軒",
+        "星期二": "瑤",
+        "星期三": "瑤",
+        "星期四": "軒",
+        "星期五": "瑤"
+      }
+    },
+    {
+      "class": "2A",
+      "days": {
+        "星期一": "符",
+        "星期二": "慧",
+        "星期三": "慧",
+        "星期四": "符",
+        "星期五": "符"
+      }
+    },
+    {
+      "class": "2B",
+      "days": {
+        "星期一": "碧",
+        "星期二": "羅",
+        "星期三": "羅",
+        "星期四": "羅",
+        "星期五": "碧"
+      }
+    },
+    {
+      "class": "2C",
+      "days": {
+        "星期一": "可",
+        "星期二": "華",
+        "星期三": "可",
+        "星期四": "可",
+        "星期五": "華"
+      }
+    },
+    {
+      "class": "3A",
+      "days": {
+        "星期一": "鄭",
+        "星期二": "何",
+        "星期三": "何",
+        "星期四": "鄭",
+        "星期五": "何"
+      }
+    },
+    {
+      "class": "3B",
+      "days": {
+        "星期一": "李",
+        "星期二": "清",
+        "星期三": "李",
+        "星期四": "李",
+        "星期五": "佩"
+      }
+    },
+    {
+      "class": "3C",
+      "days": {
+        "星期一": "瑩",
+        "星期二": "倩",
+        "星期三": "倩",
+        "星期四": "瑩",
+        "星期五": "倩"
+      }
+    },
+    {
+      "class": "4A",
+      "days": {
+        "星期一": "尹",
+        "星期二": "杰",
+        "星期三": "杰",
+        "星期四": "尹",
+        "星期五": "尹"
+      }
+    },
+    {
+      "class": "4B",
+      "days": {
+        "星期一": "呂",
+        "星期二": "奕",
+        "星期三": "奕",
+        "星期四": "奕",
+        "星期五": "呂"
+      }
+    },
+    {
+      "class": "4C",
+      "days": {
+        "星期一": "智",
+        "星期二": "恒",
+        "星期三": "恒",
+        "星期四": "智",
+        "星期五": "智"
+      }
+    },
+    {
+      "class": "5A",
+      "days": {
+        "星期一": "茵",
+        "星期二": "談",
+        "星期三": "談",
+        "星期四": "茵",
+        "星期五": "茵"
+      }
+    },
+    {
+      "class": "5B",
+      "days": {
+        "星期一": "偉",
+        "星期二": "邵",
+        "星期三": "邵",
+        "星期四": "邵",
+        "星期五": "偉"
+      }
+    },
+    {
+      "class": "5C",
+      "days": {
+        "星期一": "雯",
+        "星期二": "紅",
+        "星期三": "紅",
+        "星期四": "雯",
+        "星期五": "紅"
+      }
+    },
+    {
+      "class": "5D",
+      "days": {
+        "星期一": "穩",
+        "星期二": "筠",
+        "星期三": "筠",
+        "星期四": "穩",
+        "星期五": "筠"
+      }
+    },
+    {
+      "class": "6A",
+      "days": {
+        "星期一": "幗",
+        "星期二": "幗",
+        "星期三": "俊",
+        "星期四": "俊",
+        "星期五": "俊"
+      }
+    },
+    {
+      "class": "6B",
+      "days": {
+        "星期一": "琪",
+        "星期二": "燕",
+        "星期三": "琪",
+        "星期四": "琪",
+        "星期五": "燕"
+      }
+    },
+    {
+      "class": "6C",
+      "days": {
+        "星期一": "儀",
+        "星期二": "儀",
+        "星期三": "蔚",
+        "星期四": "儀",
+        "星期五": "蔚"
+      }
+    },
+    {
+      "class": "6D",
+      "days": {
+        "星期一": "穎",
+        "星期二": "仁",
+        "星期三": "穎",
+        "星期四": "趙",
+        "星期五": "仁"
+      }
+    }
+  ],
+  "noon": [
+    {
+      "sunny": "持咪",
+      "rain": "-",
+      "days": {
+        "星期一": "蔚",
+        "星期二": "呂",
+        "星期三": "清",
+        "星期四": "偉",
+        "星期五": "-"
+      }
+    },
+    {
+      "sunny": "操二至洗手間",
+      "rain": "2/F",
+      "days": {
+        "星期一": "瑤",
+        "星期二": "雯",
+        "星期三": "軒",
+        "星期四": "敏",
+        "星期五": "2/F梅"
+      }
+    },
+    {
+      "sunny": "操一",
+      "rain": "2/F",
+      "days": {
+        "星期一": "趙",
+        "星期二": "可",
+        "星期三": "華",
+        "星期四": "幗",
+        "星期五": "2/F軒"
+      }
+    },
+    {
+      "sunny": "中式花園",
+      "rain": "3/F",
+      "days": {
+        "星期一": "華",
+        "星期二": "碧",
+        "星期三": "鄭",
+        "星期四": "蔚",
+        "星期五": "3/F談"
+      }
+    },
+    {
+      "sunny": "籃足間",
+      "rain": "3/F",
+      "days": {
+        "星期一": "杰",
+        "星期二": "尹",
+        "星期三": "仁",
+        "星期四": "倩",
+        "星期五": "3/F羅"
+      }
+    },
+    {
+      "sunny": "操二至洗手間",
+      "rain": "4/F",
+      "days": {
+        "星期一": "筠",
+        "星期二": "茵",
+        "星期三": "符",
+        "星期四": "何",
+        "星期五": "4/F李"
+      }
+    },
+    {
+      "sunny": "操一",
+      "rain": "4/F",
+      "days": {
+        "星期一": "蔚",
+        "星期二": "琪",
+        "星期三": "清",
+        "星期四": "清",
+        "星期五": "4/F奕"
+      }
+    },
+    {
+      "sunny": "中式花園",
+      "rain": "5/F",
+      "days": {
+        "星期一": "仁",
+        "星期二": "穎",
+        "星期三": "穩",
+        "星期四": "紅",
+        "星期五": "5/F邵"
+      }
+    },
+    {
+      "sunny": "籃球場",
+      "rain": "5/F",
+      "days": {
+        "星期一": "恒",
+        "星期二": "呂",
+        "星期三": "呂",
+        "星期四": "偉",
+        "星期五": "5/F雯"
+      }
+    },
+    {
+      "sunny": "足球場",
+      "rain": "6/F",
+      "days": {
+        "星期一": "談",
+        "星期二": "偉",
+        "星期三": "智",
+        "星期四": "恒",
+        "星期五": "6/F儀"
+      }
+    },
+    {
+      "sunny": "詢問處至英語角",
+      "rain": "6/F",
+      "days": {
+        "星期一": "清",
+        "星期二": "俊",
+        "星期三": "燕",
+        "星期四": "慧",
+        "星期五": "6/F 慧"
+      }
+    }
+  ],
+  "prep": [
+    {
+      "period": "第一節 08:20–08:55",
+      "days": {
+        "DAY 1": "P1數備(佩/趙/軒)",
+        "DAY 2": "P2數備(符/碧/清)",
+        "DAY 3": "",
+        "DAY 4": "",
+        "DAY 5": "P3數備(佩/碧/趙)",
+        "DAY 6": ""
+      }
+    },
+    {
+      "period": "第二節 08:55–09:30",
+      "days": {
+        "DAY 1": "P4英備(尹/奕/華) P5英備 (慧/倩/鄭/雯)",
+        "DAY 2": "",
+        "DAY 3": "P6常備 (趙/符/瑩/蔚)",
+        "DAY 4": "P6英備 (可/尹/琪/談)",
+        "DAY 5": "",
+        "DAY 6": ""
+      }
+    },
+    {
+      "period": "第三節 09:30–10:05",
+      "days": {
+        "DAY 1": "",
+        "DAY 2": "",
+        "DAY 3": "",
+        "DAY 4": "",
+        "DAY 5": "",
+        "DAY 6": "P5人備 (何/瑤/談/仁)"
+      }
+    },
+    {
+      "period": "第四節 10:20–10:55",
+      "days": {
+        "DAY 1": "",
+        "DAY 2": "P2中備(羅/蔚/穩)",
+        "DAY 3": "P3中備(何/李/杰)",
+        "DAY 4": "P2人備(慧/杰/軒)",
+        "DAY 5": "",
+        "DAY 6": "P4科備(智/燕/恒) P3常備(筠/俊/華)"
+      }
+    },
+    {
+      "period": "第五節 10:55–11:30",
+      "days": {
+        "DAY 1": "P5中備 (茵/邵/紅/筠)",
+        "DAY 2": "P6數備 (儀/穎/燕/幗)",
+        "DAY 3": "P1人備(茵/邵/紅)",
+        "DAY 4": "P6中備 (羅/李/俊/仁)",
+        "DAY 5": "",
+        "DAY 6": ""
+      }
+    },
+    {
+      "period": "第六節 11:50–12:25",
+      "days": {
+        "DAY 1": "P1科備(儀/碧/幗)",
+        "DAY 2": "",
+        "DAY 3": "P4中備(敏/瑤/冬) P1英備(琪/慧/華)",
+        "DAY 4": "P5數備(儀/谷/偉) P3英備(倩/鄭)",
+        "DAY 5": "P4數備(智/穎/呂)",
+        "DAY 6": "P4人備(梅/軒/杰) P5科備 (談/偉/呂/清)"
+      }
+    },
+    {
+      "period": "第七節 12:25–13:00",
+      "days": {
+        "DAY 1": "P2英備(可/奕/雯)",
+        "DAY 2": "P1中備(敏/梅/瑤)",
+        "DAY 3": "",
+        "DAY 4": "",
+        "DAY 5": "P2科備(智/佩/燕)",
+        "DAY 6": ""
+      }
+    }
+  ],
+  "afternoonActivities": [
+    {
+      "星期一": "籃球校隊(1530－1730) (偉/外聘)(籃球場) (行政工作)",
+      "星期二": "欖球校隊(1530－1730) (穎/外聘)(籃球場) (行政工作)",
+      "星期三": "奧數(穎/外聘)(行政工作)",
+      "星期四": "足球校隊(1530－1730) (呂/外聘)(籃球場) (行政工作)"
+    },
+    {
+      "星期一": "",
+      "星期二": "國旗隊(仁/外聘) (行政工作)",
+      "星期三": "",
+      "星期四": "中國舞校隊(1530－1730) (趙/外聘)(G02) (行政工作)"
+    },
+    {
+      "星期一": "",
+      "星期二": "",
+      "星期三": "",
+      "星期四": "佛化藝術教育活動(行政工作) (宗教組)(仁統籌)"
+    },
+    {
+      "星期一": "游泳校隊至1730) (佩/外聘)(泳池)",
+      "星期二": "佛教話劇隊(軒/杰)(禮堂)",
+      "星期三": "中文(低)(李/敏)",
+      "星期四": "游泳校隊至1730) (偉/外聘)(泳池)"
+    },
+    {
+      "星期一": "英文話劇隊 (慧/尹/NET)(禮堂)",
+      "星期二": "女童軍(雯/符)",
+      "星期三": "視藝(低)(羅/筠)",
+      "星期四": "圖書(瑩/可)"
+    },
+    {
+      "星期一": "新聞學人計劃(HK01計劃) (茵/蔚)",
+      "星期二": "科學(燕/智)",
+      "星期三": "幼童軍(仁/俊)",
+      "星期四": "英文P6 (鄭/琪)"
+    },
+    {
+      "星期一": "中文(高)(紅/何)",
+      "星期二": "",
+      "星期三": "國術隊(王)(禮堂)",
+      "星期四": ""
+    },
+    {
+      "星期一": "",
+      "星期二": "",
+      "星期三": "STEM(恒/談)",
+      "星期四": ""
+    },
+    {
+      "星期一": "",
+      "星期二": "",
+      "星期三": "合唱團(邵/外聘)",
+      "星期四": ""
+    },
+    {
+      "星期一": "正能量(P1)(儀/邵/穎)",
+      "星期二": "正能量(P1)(梅/趙/奕)",
+      "星期三": "",
+      "星期四": "正能量(P1)(碧/幗/清)"
+    },
+    {
+      "星期一": "P4科學科(燕/恒/智) (校外支援會議)",
+      "星期二": "行政會 (清/呂/恒/談/穩/偉/幗/仁/穎/蔚)",
+      "星期三": "",
+      "星期四": "P4科學科(燕/恒/智) (校外支援會議)"
+    },
+    {
+      "星期一": "",
+      "星期二": "",
+      "星期三": "",
+      "星期四": "P5人文科(何瑤談仁)(杰) (校外支援會議)"
+    }
+  ],
+  "subjectAliases": {
+    "中文": [
+      "中",
+      "中文",
+      "中文科"
+    ],
+    "英文": [
+      "英",
+      "英文",
+      "英文科",
+      "英語"
+    ],
+    "數學": [
+      "數",
+      "數學",
+      "數學科"
+    ],
+    "常識": [
+      "常",
+      "常識",
+      "常識科"
+    ],
+    "人文": [
+      "人",
+      "人文",
+      "人文科"
+    ],
+    "科學": [
+      "科",
+      "科學",
+      "科學科"
+    ],
+    "音樂": [
+      "音",
+      "音樂",
+      "音樂科"
+    ],
+    "體育": [
+      "體",
+      "體育",
+      "體育科"
+    ],
+    "視藝": [
+      "視",
+      "視藝",
+      "視藝科",
+      "美術"
+    ],
+    "普通話": [
+      "普",
+      "普通話",
+      "普通話科"
+    ],
+    "資訊科技": [
+      "資",
+      "資訊",
+      "資訊科技",
+      "資訊科技科",
+      "電腦"
+    ],
+    "生命教育": [
+      "生",
+      "生命",
+      "生命教育"
+    ]
+  }
+};
+
+</script>
+  <script>
+    const TABS = [
+      ["home", "總覽"],
+      ["teacher", "老師"],
+      ["klass", "班別"],
+      ["subject", "科目"],
+      ["timetable", "時間表"],
+      ["duty", "當值"],
+      ["pm", "下午活動"],
+      ["prep", "備課"],
+      ["rules", "守則"]
+    ];
+    const state = { tab: "home", q: "", teacher: null, klass: null, subject: null };
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    const PM_LABEL = { mon: "一", tue: "二", wed: "三", thu: "四", fri: "五" };
+    const SUBJ_FULL = {中:"中文",英:"英文",數:"數學",常:"常識",科學:"科學",人文:"人文",音:"音樂",體:"體育",視:"視藝",普:"普通話",資:"資訊科技"};
+    function fullSubject(s) { return SUBJ_FULL[s] || s; }
+    const DAYS6 = ["DAY 1","DAY 2","DAY 3","DAY 4","DAY 5","DAY 6"];
+    const WEEKDAYS = ["星期一","星期二","星期三","星期四","星期五"];
+    const PERIOD_RANK = {一:1,二:2,三:3,四:4,五:5,六:6,七:7};
+    function dayRank(day) {
+      const d6 = DAYS6.indexOf(day);
+      if (d6 >= 0) return d6;
+      const w = WEEKDAYS.indexOf(day);
+      if (w >= 0) return 10 + w;
+      return 99;
+    }
+    function periodRank(period) {
+      const m = String(period || "").match(/第([一二三四五六七])/);
+      return m ? PERIOD_RANK[m[1]] : 99;
+    }
+    function sortDutyList(list) {
+      return [...(list || [])].sort((a, b) =>
+        dayRank(a.day) - dayRank(b.day) || periodRank(a.period) - periodRank(b.period)
+      );
+    }
+
+    function teacherByCode(code) {
+      return DATA.teachers.find(t => t.code === code);
+    }
+    function teacherLabel(code) {
+      const t = teacherByCode(code);
+      if (!t) return esc(code);
+      return `<a class="linkish" data-go-teacher="${esc(t.code)}">${esc(t.code)} ${esc(t.name)}</a>`;
+    }
+
+    function renderTabs() {
+      $("tabs").innerHTML = TABS.map(([id, name]) =>
+        `<button data-tab="${id}" class="${state.tab===id?"active":""}">${name}</button>`
+      ).join("");
+    }
+
+    function setTab(tab, skipHash) {
+      state.tab = tab;
+      renderTabs();
+      render();
+      if (!skipHash) writeHash();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function writeHash() {
+      let h = "";
+      if (state.tab === "teacher" && state.teacher) h = "老師/" + state.teacher;
+      else if (state.tab === "klass" && state.klass) h = "班/" + state.klass;
+      else if (state.tab === "subject" && state.subject) h = "科/" + state.subject;
+      else if (state.tab !== "home") h = state.tab;
+      const next = h ? "#" + h : "#";
+      if (location.hash !== next && location.hash !== (h ? "#" + h : "")) {
+        history.replaceState(null, "", h ? "#" + encodeURI(h) : location.pathname);
+      }
+    }
+    function loadHash() {
+      const h = decodeURI(location.hash.replace(/^#/, ""));
+      state.teacher = null; state.klass = null; state.subject = null;
+      if (!h || h === "home") { state.tab = "home"; return; }
+      if (h.startsWith("老師/")) { state.tab = "teacher"; state.teacher = h.slice(3); return; }
+      if (h.startsWith("班/")) { state.tab = "klass"; state.klass = h.slice(2); return; }
+      if (h.startsWith("科/")) { state.tab = "subject"; state.subject = h.slice(2); return; }
+      if (TABS.some(([id]) => id === h)) state.tab = h;
+    }
+
+    function goTeacher(code) {
+      state.teacher = code;
+      state.q = "";
+      $("q").value = "";
+      setTab("teacher");
+    }
+    function goClass(cls) {
+      state.klass = cls;
+      state.q = "";
+      $("q").value = "";
+      setTab("klass");
+    }
+    function goSubject(name) {
+      state.subject = name;
+      state.q = "";
+      $("q").value = "";
+      setTab("subject");
+    }
+
+    function norm(s) {
+      return String(s || "").toLowerCase().replace(/\s+/g, "").replace(/[–—-]/g, "");
+    }
+
+    function teacherBlob(t) {
+      const d = t.duties || {};
+      const dutyTxt = ["recess1","recess2","lunch","noon","prep","activities"]
+        .flatMap(k => (d[k] || []).map(x => Object.values(x).join(" ")))
+        .join(" ");
+      return [t.name, t.code, t.homeroom, t.periods, t.liaison,
+        (t.chairOf||[]).join(" "), (t.viceOf||[]).join(" "),
+        (t.gradeContact||[]).join(" "),
+        (t.subjects||[]).map(s => s.subject + " " + s.classes).join(" "),
+        Object.values(t.pm || {}).join(" "),
+        dutyTxt].join(" ");
+    }
+    function matchTeacher(t, q) {
+      if (!q) return true;
+      const nq = norm(q);
+      if (t.code && t.code === q) return true;
+      if (t.name && t.name.includes(q)) return true;
+      return norm(teacherBlob(t)).includes(nq);
+    }
+
+    function searchHits(q) {
+      const nq = norm(q);
+      if (!nq) return { teachers: [], classes: [], subjects: [] };
+      const teachers = DATA.teachers.filter(t => matchTeacher(t, q));
+      const classes = DATA.classes.filter(c =>
+        norm(c.class) === nq ||
+        nq === "p" + c.class[0] ||
+        ("小" + "一二三四五六"[Number(c.class[0])-1] + c.class[1]).includes(q) ||
+        Object.values(c.teachers).some(v => v.includes(q))
+      );
+      const subjects = [];
+      for (const [name, aliases] of Object.entries(DATA.subjectAliases)) {
+        if (aliases.some(a => nq === norm(a) || q === a) || name.includes(q)) {
+          subjects.push(name);
+        }
+      }
+      return { teachers, classes, subjects };
+    }
+
+    function teacherCard(t, compact=false) {
+      const subj = t.subjects.map(s =>
+        `<dt>${esc(s.subject)}</dt><dd>${esc(s.classes)}${s.star ? '<span class="badge">減 1 節</span>' : ""}</dd>`
+      ).join("") || "<dt>科目</dt><dd>—</dd>";
+      const pm = Object.entries(t.pm).map(([k,v]) =>
+        `<dt>星期${PM_LABEL[k]}</dt><dd>${esc(v) || "—"}</dd>`
+      ).join("");
+      const roles = [
+        t.chairOf.length ? `科主席：${t.chairOf.map(fullSubject).join("、")}` : "",
+        t.viceOf.length ? `副科主席：${t.viceOf.map(fullSubject).join("、")}` : "",
+        t.liaison ? `級聯絡：${t.liaison}` : "",
+        DATA.sen.includes(t.code) ? "SEN" : ""
+      ].filter(Boolean);
+      const d1 = sortDutyList(t.duties.recess1).map(d =>
+        `<div class="duty-item"><b>${esc(d.day)}</b> · ${esc(d.place)}<div class="meta">${esc(d.time)}</div></div>`
+      ).join("") || '<div class="meta">沒有小息一當值</div>';
+      const d2 = sortDutyList(t.duties.recess2).map(d =>
+        `<div class="duty-item"><b>${esc(d.day)}</b> · 晴：${esc(d.sunny)} ／ 雨：${esc(d.rain)}<div class="meta">${esc(d.time)}</div></div>`
+      ).join("") || '<div class="meta">沒有小息二當值</div>';
+      const lunch = sortDutyList(t.duties.lunch).map(d =>
+        `<div class="duty-item"><b>${esc(d.day)}</b> · ${esc(d.class)} 班<div class="meta">${esc(d.time)}</div></div>`
+      ).join("") || '<div class="meta">沒有午膳當值</div>';
+      const noon = sortDutyList(t.duties.noon).map(d =>
+        `<div class="duty-item"><b>${esc(d.day)}</b> · 晴：${esc(d.sunny)} ／ 雨：${esc(d.rain)}<div class="meta">${esc(d.time)}</div></div>`
+      ).join("") || '<div class="meta">沒有午息當值</div>';
+      const prep = sortDutyList(t.duties.prep).map(d =>
+        `<div class="duty-item"><b>${esc(d.day)}</b> · ${esc(d.period)}<div class="meta">${esc(d.text)}</div></div>`
+      ).join("") || '<div class="meta">沒有列明備課</div>';
+      const act = sortDutyList(t.duties.activities).map(d =>
+        `<div class="duty-item"><b>${esc(d.day)}</b><div class="meta">${esc(d.text)}</div></div>`
+      ).join("") || '<div class="meta">沒有列明課後活動</div>';
+
+      return `<article class="card" id="t-${esc(t.code)}">
+        <div class="name-line">
+          <span class="code">${esc(t.code || "—")}</span>
+          <h2 style="margin:0">${esc(t.name)}</h2>
+          ${t.homeroom ? `<span class="badge teal">${esc(t.homeroom.startsWith("協") ? t.homeroom : t.homeroom + " 班任")}</span>` : ""}
+          <span class="badge gold">${esc(t.periods || "—")} 堂</span>
+        </div>
+        ${roles.length ? `<p class="meta">${roles.map(esc).join(" · ")}</p>` : ""}
+        ${compact ? `<p class="meta">${t.subjects.map(s => esc(s.subject)+" "+esc(s.classes)).join(" ／ ") || "無課堂科目"}</p>
+          <p><a class="linkish" data-go-teacher="${esc(t.code)}">查看完整資料 →</a></p>` : `
+        <div class="row-2">
+          <div>
+            <h3>課擔</h3>
+            <dl class="kv">${subj}</dl>
+            <h3>下午（周一至周五）</h3>
+            <dl class="kv">${pm}</dl>
+          </div>
+          <div>
+            <h3>小息一 10:05–10:20</h3>${d1}
+            <h3>小息二 11:30–11:50</h3>${d2}
+            <h3>午膳 13:00–13:40</h3>${lunch}
+            <h3>午息 13:40–14:00</h3>${noon}
+          </div>
+        </div>
+        <h3>備課／開會</h3>${prep}
+        <h3>課後／下午活動（文件有提及）</h3>${act}
+        `}
+      </article>`;
+    }
+
+    function classCard(c) {
+      const rows = Object.entries(c.teachers).map(([k,v]) => {
+        const codes = (v || "").split(/[/、＋+]/).map(s => s.trim()).filter(Boolean);
+        const people = codes.map(code => {
+          const t = teacherByCode(code);
+          return t
+            ? `<a class="linkish" data-go-teacher="${esc(t.code)}">${esc(code)}</a>`
+            : esc(code);
+        }).join("／");
+        return `<tr><th>${esc(k)}</th><td>${people || "—"}</td></tr>`;
+      }).join("");
+      const lunch = DATA.lunch.find(x => x.class === c.class);
+      const lunchRow = lunch ? WEEKDAYS.map(d => `<td>${teacherLabel(lunch.days[d])}</td>`).join("") : "";
+      return `<article class="card">
+        <div class="name-line"><h2 style="margin:0">${esc(c.class)}</h2></div>
+        <div class="table-wrap"><table>${rows}</table></div>
+        ${lunch ? `<h3>午膳當值 13:00–13:40</h3>
+          <div class="table-wrap"><table>
+            <tr>${WEEKDAYS.map(d=>`<th>${d}</th>`).join("")}</tr>
+            <tr>${lunchRow}</tr>
+          </table></div>` : ""}
+      </article>`;
+    }
+
+    function subjectCard(name) {
+      const team = DATA.subjectTeams.find(s => s.subject.replace("科","") === name || s.subject === name || s.subject.startsWith(name));
+      const role = DATA.subjectRoles.find(s =>
+        name.startsWith(s.subject) || s.subject === name.replace("科","") ||
+        (name === "資訊科技" && s.subject === "資") ||
+        (name === "普通話" && s.subject === "普") ||
+        (name === "視藝" && s.subject === "視") ||
+        (name === "體育" && s.subject === "體") ||
+        (name === "音樂" && s.subject === "音") ||
+        (name === "科學" && s.subject === "科學") ||
+        (name === "常識" && s.subject === "常") ||
+        (name === "人文" && s.subject === "人文") ||
+        (name === "數學" && s.subject === "數") ||
+        (name === "英文" && s.subject === "英") ||
+        (name === "中文" && s.subject === "中")
+      );
+      const who = DATA.teachers.filter(t => t.subjects.some(s => s.subject === name || s.subject.startsWith(name)));
+      const gradeRows = Object.entries(DATA.gradeTeachers).map(([g, map]) => {
+        const key = Object.keys(map).find(k => name.startsWith(k) || k.startsWith(name[0]));
+        // better key map
+        const keymap = {中文:"中",英文:"英",數學:"數",常識:"常",人文:"人文",科學:"科學",音樂:"音",體育:"體",視藝:"視",普通話:"普",資訊科技:"資",生命教育:null};
+        const k = keymap[name];
+        const val = k ? map[k] : "";
+        return `<tr><th>${esc(g)}</th><td>${esc(val || "—")}</td></tr>`;
+      }).join("");
+      let liaison = "";
+      if (role) {
+        liaison = Object.entries(role.liaison).map(([g,w]) =>
+          `<tr><th>${esc(g)}</th><td>${w ? teacherLabel(w) : "—"}</td></tr>`
+        ).join("");
+      }
+      return `<article class="card">
+        <h2>${esc(name)}</h2>
+        ${role ? `<p>科主席：${role.chair ? teacherLabel(role.chair) : "—"}
+          　副科主席：${role.vice ? teacherLabel(role.vice) : "—"}</p>` : ""}
+        ${team ? `<p class="meta">${esc(team.teachers)}（${esc(team.count)}）</p>` : ""}
+        <h3>各級科任</h3>
+        <div class="table-wrap"><table>${gradeRows}</table></div>
+        ${role ? `<h3>級聯絡</h3><div class="table-wrap"><table>${liaison}</table></div>` : ""}
+        <h3>相關老師課擔</h3>
+        <div class="grid">${who.map(t => teacherCard(t, true)).join("") || "<p>沒有</p>"}</div>
+      </article>`;
+    }
+
+    function homeView() {
+      const hits = state.q ? searchHits(state.q) : null;
+      if (hits && (hits.teachers.length || hits.classes.length || hits.subjects.length)) {
+        return `<p class="hint">找到 ${hits.teachers.length} 位老師、${hits.classes.length} 班、${hits.subjects.length} 科</p>
+          ${hits.subjects.length ? `<h3>科目</h3>` + hits.subjects.map(s => `<button class="chip" data-go-subject="${esc(s)}">${esc(s)}</button>`).join(" ") : ""}
+          ${hits.classes.length ? `<h3>班別</h3><div class="grid">${hits.classes.map(classCard).join("")}</div>` : ""}
+          ${hits.teachers.length ? `<h3>老師</h3><div class="grid">${hits.teachers.map(t => teacherCard(t, true)).join("")}</div>` : ""}`;
+      }
+      if (state.q) return `<div class="empty">找不到「${esc(state.q)}」。可試老師代號（如 敏）、全名、班別（1A）或科目（中文）。</div>`;
+
+      return `<div class="welcome">
+        <div class="stat">
+          <span><b>${DATA.teachers.length}</b>位老師</span>
+          <span><b>${DATA.classes.length}</b>班</span>
+          <span><b>49</b>節／周</span>
+        </div>
+        <p class="hint">可使用上方搜尋，或以老師代號、姓名、班別、科目查詢。</p>
+        <h3>快速查詢</h3>
+        <div class="chips">
+          ${["敏","1A","中文","星期二","燕","5A","小息"].map(x => `<button class="chip" data-q="${x}">${x}</button>`).join("")}
+        </div>
+        <h3>班別</h3>
+        <div class="chips">${DATA.classes.map(c => `<button class="chip" data-go-class="${c.class}">${c.class}</button>`).join("")}</div>
+        <h3>科目</h3>
+        <div class="chips">${Object.keys(DATA.subjectAliases).map(s => `<button class="chip" data-go-subject="${s}">${s}</button>`).join("")}</div>
+        <div class="card" style="margin-top:16px">
+          <h2>課堂總節數（上午 DAY 循環）</h2>
+          <p class="meta">${DATA.periods.notes.map(esc).join(" · ")}</p>
+          <div class="table-wrap"><table>
+            <tr><th>科目</th>${DATA.periods.grades.map(g=>`<th>${esc(g)}</th>`).join("")}</tr>
+            ${DATA.periods.rows.map(r => `<tr><th>${esc(r.subject)}</th>${DATA.periods.grades.map(g=>`<td>${esc(r.byGrade[g]||"—")}</td>`).join("")}</tr>`).join("")}
+          </table></div>
+        </div>
+      </div>`;
+    }
+
+    function teacherView() {
+      const list = DATA.teachers.filter(t => matchTeacher(t, state.q));
+      const focus = state.teacher && !state.q ? DATA.teachers.find(t => t.code === state.teacher) : null;
+      const chips = `<div class="chips">${DATA.teachers.map(t =>
+        `<button class="tchip ${state.teacher===t.code?"active":""}" data-go-teacher="${esc(t.code)}"><b>${esc(t.code||"·")}</b>${esc(t.name)}</button>`
+      ).join("")}</div>`;
+      if (focus) return chips + teacherCard(focus);
+      return chips + (list.length
+        ? (state.q ? `<p class="hint">${list.length} 位老師</p>` : `<p class="hint">揀一位老師，或搜姓名／代號</p>`) +
+          (state.q ? list.map(t => teacherCard(t)).join("") : `<div class="grid">${list.map(t => teacherCard(t,true)).join("")}</div>`)
+        : `<div class="empty">沒有符合的老師</div>`);
+    }
+
+    function classView() {
+      const q = state.q;
+      let list = DATA.classes;
+      if (q) {
+        const nq = norm(q);
+        list = DATA.classes.filter(c =>
+          norm(c.class).includes(nq) || Object.values(c.teachers).join("").includes(q)
+        );
+      }
+      const focus = state.klass && !q ? DATA.classes.find(c => c.class === state.klass) : null;
+      const chips = `<div class="chips">${DATA.classes.map(c =>
+        `<button class="chip" data-go-class="${c.class}">${c.class}</button>`
+      ).join("")}</div>`;
+      if (focus) return chips + classCard(focus);
+      return chips + list.map(classCard).join("");
+    }
+
+    function subjectView() {
+      const names = Object.keys(DATA.subjectAliases);
+      const chips = `<div class="chips">${names.map(s =>
+        `<button class="chip" data-go-subject="${s}">${s}</button>`
+      ).join("")}</div>`;
+      const focus = state.subject || (state.q && searchHits(state.q).subjects[0]);
+      if (focus) return chips + subjectCard(focus);
+      return chips + `<p class="hint">揀一科睇科主席、級聯絡同科任。</p>
+        <div class="table-wrap"><table>
+          <tr><th>科目</th><th>科主席</th><th>副科主席</th><th>科任老師</th></tr>
+          ${DATA.subjectRoles.map(r => {
+            const team = DATA.subjectTeams.find(s => s.subject.includes(r.subject) || r.subject.includes(s.subject[0]));
+            return `<tr><th>${esc(r.subject)}</th><td>${r.chair?teacherLabel(r.chair):"—"}</td><td>${r.vice?teacherLabel(r.vice):"—"}</td><td class="meta">${team?esc(team.teachers):""}</td></tr>`;
+          }).join("")}
+        </table></div>`;
+    }
+
+    function timetableView() {
+      const am = DATA.timetable.morning;
+      const days = [["mon","一"],["tue","二"],["wed","三"],["thu","四"],["fri","五"]];
+      return `<div class="card">
+        <h2>全日時間表（學生版）</h2>
+        <div class="table-wrap"><table>
+          <tr><th>時間</th>${days.map(d=>`<th>星期${d[1]}</th>`).join("")}</tr>
+          ${am.map(r => `<tr><th>${esc(r.time)}</th>${days.map(d=>`<td>${esc(r[d[0]])}</td>`).join("")}</tr>`).join("")}
+        </table></div>
+        <h3>上午課堂（DAY 1–6 循環）</h3>
+        <div class="table-wrap"><table>
+          <tr><th>節</th><th>時間</th><th>備註</th></tr>
+          ${DATA.timetable.lessons.map(r => `<tr><th>${esc(r.period)}</th><td>${esc(r.time)}</td><td>${esc(r.note||"")}</td></tr>`).join("")}
+        </table></div>
+        <p class="meta">${esc(DATA.timetable.lunch.time)}　${esc(DATA.timetable.lunch.note)}</p>
+        <h3>下午 P1–P3</h3>
+        <div class="table-wrap"><table>
+          <tr><th>時間</th>${days.map(d=>`<th>星期${d[1]}</th>`).join("")}</tr>
+          ${DATA.timetable.afternoonP13.map(r => `<tr><th>${esc(r.time)}</th>${days.map(d=>`<td>${esc(r[d[0]])}</td>`).join("")}</tr>`).join("")}
+        </table></div>
+        <h3>下午 P4–P6</h3>
+        <div class="table-wrap"><table>
+          <tr><th>時間</th>${days.map(d=>`<th>星期${d[1]}</th>`).join("")}</tr>
+          ${DATA.timetable.afternoonP46.map(r => `<tr><th>${esc(r.time)}</th>${days.map(d=>`<td>${esc(r[d[0]])}</td>`).join("")}</tr>`).join("")}
+        </table></div>
+        <p class="meta">1／2／3 為第一／第二／第三學段。教師版時間表格子原文為空白，供自行填寫。</p>
+      </div>`;
+    }
+
+    function dutyTable(headers, rows, cellFn) {
+      return `<div class="table-wrap"><table>
+        <tr>${headers.map(h=>`<th>${esc(h)}</th>`).join("")}</tr>
+        ${rows.map(row => `<tr>${cellFn(row)}</tr>`).join("")}
+      </table></div>`;
+    }
+
+    function highlightCode(text) {
+      const t = teacherByCode(text);
+      if (t) return teacherLabel(text);
+      // Friday noon like 2/F梅
+      const m = String(text).match(/^(.+?)([\u4e00-\u9fff]{1,2})$/);
+      if (m && teacherByCode(m[2])) return esc(m[1]) + teacherLabel(m[2]);
+      return esc(text);
+    }
+
+    function dutyView() {
+      const q = state.q;
+      let extra = "";
+      if (q) {
+        const tlist = DATA.teachers.filter(t => matchTeacher(t, q));
+        if (tlist.length) {
+          extra = tlist.map(t => teacherCard(t)).join("");
+        }
+      }
+      return extra + `<div class="card">
+        <h2>小息一　10:05–10:20　全校樓層小息（玩具趣趣）</h2>
+        <p class="meta">當值老師請準時到達樓層位置 · 第三節老師準時回課室 · ${esc(DATA.dutyIndex.patrol)}</p>
+        ${dutyTable(["樓層", ...DAYS6], DATA.recess1, r =>
+          `<th>${esc(r.floor)}</th>` + DAYS6.map(d => `<td>${highlightCode(r.days[d])}</td>`).join("")
+        )}
+      </div>
+      <div class="card">
+        <h2>小息二　11:30–11:50</h2>
+        <p class="meta">晴天：操場活力小息　·　雨天：樓層玩具趣趣</p>
+        ${dutyTable(["操場(晴)", "樓層(雨)", ...DAYS6], DATA.recess2, r =>
+          `<th>${esc(r.sunny)}</th><th>${esc(r.rain)}</th>` + DAYS6.map(d => `<td>${highlightCode(r.days[d])}</td>`).join("")
+        )}
+      </div>
+      <div class="card">
+        <h2>午膳　13:00–13:40</h2>
+        ${dutyTable(["班", ...WEEKDAYS], DATA.lunch, r =>
+          `<th>${esc(r.class)}</th>` + WEEKDAYS.map(d => `<td>${highlightCode(r.days[d])}</td>`).join("")
+        )}
+      </div>
+      <div class="card">
+        <h2>午息　13:40–14:00</h2>
+        <p class="meta">一至四：晴天操場繽紛午休／雨天樓層玩具趣趣　·　星期五：全校樓層小息</p>
+        ${dutyTable(["操場(晴)", "樓層(雨)", ...WEEKDAYS], DATA.noon, r =>
+          `<th>${esc(r.sunny)}</th><th>${esc(r.rain)}</th>` + WEEKDAYS.map(d => `<td>${highlightCode(r.days[d])}</td>`).join("")
+        )}
+      </div>`;
+    }
+
+    function pmView() {
+      const days = WEEKDAYS.slice(0,4);
+      return `<div class="card">
+        <h2>周一至周四下午安排</h2>
+        <p class="meta">SEN：${DATA.sen.map(teacherLabel).join("／")}</p>
+        ${dutyTable(days, DATA.afternoonActivities, r =>
+          days.map(d => `<td>${esc(r[d] || "")}</td>`).join("")
+        )}
+      </div>`;
+    }
+
+    function prepView() {
+      return `<div class="card">
+        <h2>各級備課及開會時間</h2>
+        ${dutyTable(["節", ...DAYS6], DATA.prep, r =>
+          `<th>${esc(r.period)}</th>` + DAYS6.map(d => `<td>${esc(r.days[d] || "")}</td>`).join("")
+        )}
+        <ul>${DATA.timetable.prepExtra.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      </div>`;
+    }
+
+    function rulesView() {
+      const s = DATA.signIn;
+      const d = DATA.dutyIndex;
+      return `<div class="row-2">
+        <article class="card">
+          <h2>簽到及離校</h2>
+          <dl class="kv">
+            <dt>簽到</dt><dd>${esc(s.duty)}<br>${esc(s.others)}</dd>
+            <dt>外出午膳</dt><dd>${esc(s.lunchOutDuty)}<br>${esc(s.lunchOutFree)}</dd>
+            <dt>簽走</dt><dd>${esc(s.leaveNoMeeting)}<br>${esc(s.leaveActivity)}<br>${esc(s.lateStay)}</dd>
+            <dt>備註</dt><dd>${esc(s.adminMeeting)}</dd>
+          </dl>
+        </article>
+        <article class="card">
+          <h2>當值指數</h2>
+          <ul>
+            <li>${esc(d.tutorial)}</li>
+            <li>${esc(d.lunchHomeroom)}</li>
+            <li>${esc(d.lunchOthers)}</li>
+            <li>${esc(d.lunchVP)}</li>
+            <li>${esc(d.recess)}</li>
+            <li>${esc(d.library)}</li>
+            <li>${esc(d.morning)}</li>
+          </ul>
+        </article>
+      </div>
+      <article class="card">
+        <h2>課擔備註</h2>
+        <ul>${DATA.loadNotes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      </article>`;
+    }
+
+    function render() {
+      renderTabs();
+      const view = {
+        home: homeView,
+        teacher: teacherView,
+        klass: classView,
+        subject: subjectView,
+        timetable: timetableView,
+        duty: dutyView,
+        pm: pmView,
+        prep: prepView,
+        rules: rulesView
+      }[state.tab];
+      $("main").innerHTML = view();
+    }
+
+    document.addEventListener("click", (e) => {
+      const tab = e.target.closest("[data-tab]");
+      if (tab) { state.teacher = null; state.klass = null; state.subject = null; setTab(tab.dataset.tab); return; }
+      const gt = e.target.closest("[data-go-teacher]");
+      if (gt) { goTeacher(gt.dataset.goTeacher); return; }
+      const gc = e.target.closest("[data-go-class]");
+      if (gc) { goClass(gc.dataset.goClass); return; }
+      const gs = e.target.closest("[data-go-subject]");
+      if (gs) { goSubject(gs.dataset.goSubject); return; }
+      const qq = e.target.closest("[data-q]");
+      if (qq) {
+        $("q").value = qq.dataset.q;
+        state.q = qq.dataset.q;
+        state.tab = "home";
+        render();
+      }
+    });
+
+    $("q").addEventListener("input", (e) => {
+      state.q = e.target.value.trim();
+      if (state.tab === "home" || state.q) {
+        if (state.tab !== "home" && state.q) {
+          /* keep current tab but filter */
+        }
+        render();
+      }
+    });
+    $("q").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const hits = searchHits(state.q);
+        if (hits.teachers.length === 1 && !hits.classes.length) goTeacher(hits.teachers[0].code);
+        else if (hits.classes.length === 1 && hits.teachers.length === 0) goClass(hits.classes[0].class);
+        else { state.tab = "home"; writeHash(); render(); }
+      }
+    });
+
+    window.addEventListener("hashchange", () => { loadHash(); render(); });
+    loadHash();
+    const prefill = new URLSearchParams(location.search).get("q");
+    if (prefill) {
+      state.q = prefill;
+      $("q").value = prefill;
+      state.tab = "home";
+    }
+    render();
+  </script>
+</body>
+</html>
