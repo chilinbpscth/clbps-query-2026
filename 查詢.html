@@ -266,7 +266,7 @@
     }
 
     function renderKlass() {
-      const all = ["1A","1B","1C","2A","2B","2C","3A","3B","3C","4A","4B","4C","5A","5B","5C","5D","6A","6B","6C","6D"];
+      const all = ["1A","1B","2A","2B","2C","3A","3B","3C","4A","4B","4C","5A","5B","5C","5D","6A","6B","6C","6D"];
       board.innerHTML = `<article class="card">
         <h3 class="card-h">班級課表</h3>
         <div class="who-bar">
@@ -278,9 +278,7 @@
         <div id="clsOut"></div>
       </article>`;
       const note = () => {
-        const code = document.getElementById("clsSel").value;
-        document.getElementById("clsNote").textContent =
-          code === "1C" ? "1C 未見於官方班時間表檔案，以下由老師總表推算。" : "";
+        document.getElementById("clsNote").textContent = "";
       };
       const showToday = () => {
         note();
